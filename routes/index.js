@@ -8,16 +8,14 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'i4' });
 });
 
-router.get('/login', function(req, res, next) {
+router.get('/login', isLoggedOut, function(req, res, next) {
   res.render('login', { title: 'i4 - login' });
 });
 
-router.get('/dashboard',isLoggedIn, function(req, res, next) {
-  res.render('dashboard', { title: 'i4 - dashboard', user: req.user.username });
-});
 
-router.post("/login", passport.authenticate('local', {
-  successRedirect: "/dashboard",
+
+router.post("/login", isLoggedOut, passport.authenticate('local', {
+  successRedirect: "/user/dashboard",
   failureRedirect: "/login",
 }))
 

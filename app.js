@@ -4,13 +4,15 @@ var path = require('path')
 var session = require('express-session')
 var logger = require('morgan')
 var mongoose = require('mongoose')
-var {User, UserSchema} = require('./models/user')
+var { User, UserSchema } = require('./models/user')
 var passport = require('passport')
 
 
 
 
 var indexRouter = require('./routes/index')
+var userRouter = require('./routes/user')
+
 const { env } = require('process')
 
 var app = express()
@@ -19,9 +21,15 @@ require('dotenv').config()
 
 
 mongoose.set('strictQuery', true)
-mongoose.connect("mongodb+srv://i4test:" + process.env.MONGODB_PASS + "@cluster0.i8av4uz.mongodb.net/", {useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("[DB] > connected"))
-  .catch(err => console.log(err))
+
+var mongoose_url
+if(env.NODE_ENV.indexOf("dev") > -1) mongoose_url = "mongodb://localhost:27017/i4test"
+else mongoose_url = "mongodb+srv://i4test:" + process.env.MONGODB_PASS + "@cluster0.i8av4uz.mongodb.net/"
+
+
+mongoose.connect(mongoose_url, {useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("[DB] > connected"))
+    .catch(err => console.log(err))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -63,17 +71,8 @@ function isLoggedOut(req, res, next) {
 
 
 
-app.use('/test', (req, res, next) => {
-  console.log(User);
-  res.send("check console");
-})
-
 app.use('/', indexRouter)
-
-
-// User.register({username: 'jozo'}, '123', (err)=>{
-//   if (err) console.log(err)
-// })
+app.use('/user', isLoggedIn, userRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

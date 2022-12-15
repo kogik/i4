@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h2>Welcome <%= user.username %> !</h2>
+    <h3>currently working as: <%= user.role %></h3>
+    
+    <% if (user.role == "admin"){ %>
+    <a href="/user/admin-panel">admin panel</a>
+    <%}%>
+    <a href="/logout">logout</a>
+  </body>
+</html>
