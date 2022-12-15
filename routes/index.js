@@ -8,8 +8,9 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'i4' });
 });
 
-router.get('/login', isLoggedOut, function(req, res, next) {
-  res.render('login', { title: 'i4 - login' });
+router.get('/login', isLoggedOut, async function(req, res, next) {
+  var msg = await req.flash("error")
+  res.render('login', { title: 'i4 - login', messages: msg });
 });
 
 
@@ -17,6 +18,7 @@ router.get('/login', isLoggedOut, function(req, res, next) {
 router.post("/login", isLoggedOut, passport.authenticate('local', {
   successRedirect: "/user/dashboard",
   failureRedirect: "/login",
+  failureFlash: true
 }))
 
 

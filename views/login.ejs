@@ -13,6 +13,7 @@
         <h2 class="logo">
             <img src="/images/logo.png.jpeg" width="200px" height="70px">
         </h2>
+            <div class="error-msg"><%= messages %></div>
         <form action="/login" method="post">
             <div class="form-element">
                 <label for="username">Username</label>
@@ -20,7 +21,7 @@
             </div>
             <div class="form-element">
                 <label for="password">Password</label>
-                <input type="text" id="password" placeholder="Enter password" name="password">
+                <input type="password" id="password" placeholder="Enter password" name="password">
             </div>
             <div class="form-element">
                 <input type="checkbox" id="remember-me">
@@ -32,6 +33,5 @@
           </form>
     </div>
     </div>
-
 </body>
 </html>

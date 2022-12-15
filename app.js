@@ -6,7 +6,7 @@ var logger = require('morgan')
 var mongoose = require('mongoose')
 var { User, UserSchema } = require('./models/user')
 var passport = require('passport')
-
+var flash = require('connect-flash')
 
 
 
@@ -47,7 +47,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
-
+app.use(flash())
 
 // Passport.js
 app.use(passport.initialize());

@@ -84,3 +84,7 @@ body {
     cursor: pointer;
 }
 
+.error-msg{
+    text-align: center;
+    font-size: small;
+}
