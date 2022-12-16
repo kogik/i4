@@ -26,11 +26,10 @@
         <button type="submit">Create</button>
       </form>
     </div>  
-
-    <table style="width: 30%;border-spacing: unset;" border="1">
+    <input type="text" id="myInput" onkeyup="find()" placeholder="Search for names.." title="Type in a name">
+    <table style="width: 30%;border-spacing: unset;" border="1" id="users-table">
       <tbody>
-      <tr><td>Username</td><td>Role</td><td>Site</td><td></td></tr>
-
+      <tr class="header"><td>Username</td><td>Role</td><td>Site</td><td></td></tr>
       <% for (i of users) {%>
         <tr>
           <td><%= i.username %></td>
@@ -46,4 +45,24 @@
       </tbody>
       </table>
   </body>
+  <script>
+    function find() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("users-table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
+  }
+</script>
 </html>
