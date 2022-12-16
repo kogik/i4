@@ -4,6 +4,7 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/admin-panel.css' />
+    <script>var users = <%= users %> </script>
   </head>
   <body>
     <h3>Welcome in admin-panel panel here you can see all workers and edit their roles ...</h3>
@@ -24,18 +25,25 @@
         </select>
         <button type="submit">Create</button>
       </form>
-    </div>
+    </div>  
 
     <table style="width: 30%;border-spacing: unset;" border="1">
       <tbody>
-      <tr><td>Username</td><td>Role</td><td></td></tr>
+      <tr><td>Username</td><td>Role</td><td>Site</td><td></td></tr>
 
       <% for (i of users) {%>
-        <tr><td><%= i.username %></td><td><%= i.role %></td><td><a href="/user/admin-panel/delete-user/<%= i._id %>">delete</a></td></tr>
+        <tr>
+          <td><%= i.username %></td>
+          <td><%= i.role %></td>
+          <td><%= i.site %></td>
+          <td>
+            <a href="/user/admin-panel/delete-user/<%= i._id %>">delete</a>
+            <a onclick="alert('popup menu na upravu mena hesla role ... ')">edit</a>
+          </td>
+        </tr>
       <% } %>
       
       </tbody>
       </table>
-      <!-- DivTable.com -->
   </body>
 </html>

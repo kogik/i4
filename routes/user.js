@@ -13,7 +13,7 @@ router.get('/dashboard', function(req, res, next) {
 router.get('/admin-panel', isAdmin, async function(req, res, next) {
     User.find({},(err, result) =>{
         if (err) console.log(err)
-        res.render('user/admin-panel', { title: 'i4 - dashboard', user: req.user, users: result, message: req.flash('admin-message') });
+        res.render('user/admin-panel', { title: 'i4 - adminpanel', user: req.user, users: result, message: req.flash('admin-message') });
     })
 });
 

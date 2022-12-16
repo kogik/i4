@@ -1,3 +1,4 @@
+const { json } = require("express");
 const mongoose = require("mongoose");
 const passportLocalMongoose = require('passport-local-mongoose');
 
@@ -14,6 +15,12 @@ const UserSchema = new mongoose.Schema({
     role: {
         type: String,
         default: "worker"
+    },
+    site: {
+        type: String,
+    },
+    attendence:{
+        type: Object,
     }
 })
 
