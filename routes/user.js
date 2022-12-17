@@ -6,15 +6,20 @@ var router = express.Router();
 
 /* GET home page. */
 
-router.get("/dashboard", function (req, res, next) {
+router.get("/dashboard", (req, res, next) => {
 	res.render("user/dashboard", { title: "i4 - dashboard", user: req.user });
 });
 
-router.get("/admin-panel", isAdmin, async function (req, res, next) {
+router.get("/admin-panel", isAdmin, async (req, res, next) => {
 	User.find({}, (err, result) => {
 		if (err) console.log(err);
 		res.render("user/admin-panel", { title: "i4 - adminpanel", user: req.user, users: result, message: req.flash("admin-message") });
 	});
+});
+
+// logic
+router.get("/profile", (req, res, next) => {
+	res.render("user/profile", { title: "i4 - your profile", user: req.user, message: req.flash("profile-message") });
 });
 
 router.post("/admin-panel/create-user", isAdmin, (req, res, next) => {
@@ -31,6 +36,15 @@ router.get("/admin-panel/delete-user/:id", isAdmin, (req, res, next) => {
 		if (err) req.flash("admin-message", "Unable to delete user.");
 		else req.flash("admin-message", "User deleted.");
 		res.redirect("/user/admin-panel");
+	});
+});
+
+router.post("/edit-profile", (req, res, next) => {
+	var { site } = req.body;
+	User.findByIdAndUpdate(req.user._id, { site: site }, (err) => {
+		if (err) req.flash("profile-message", "Unable to edit profile informations.");
+		else req.flash("profile-message", "User informations has been saved.");
+		res.redirect("/user/profile");
 	});
 });
 

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title><%= title %></title>
+		<link rel="stylesheet" href="/stylesheets/style.css" />
+		<link rel="stylesheet" href="/stylesheets/popup.css" />
+	</head>
+	<body>
+		<div id="popup" hidden>
+			<div class="popup-box">
+				<% if (typeof(message) != "undefined"){ %>
+				<div class="msg"><%= message %></div>
+				<% } %>
+				<h3>Username: <%= user.username%></h3>
+				<h3>Role: <%= user.role%></h3>
+				<form action="/user/edit-profile" method="post">
+					<label for="site">Site: </label>
+					<input type="text" name="site" value="<%= user.site %>" />
+					<button type="submit">Save</button>
+				</form>
+				<button onclick="popup_toggle()">Close popup</button>
+			</div>
+		</div>
+
+		<% if (typeof(message) != "undefined"){ %>
+		<div class="msg"><%= message %></div>
+		<% } %>
+
+		<a href="/user/dashboard">back to dashboard</a>
+		<h2>Username: <%= user.username %></h2>
+		<h2>Role: <%= user.role %></h2>
+		<h2>Site: <%= user.site %></h2>
+		<br />
+
+		<button onclick="popup_toggle()">Edit</button>
+
+		<script src="/javascripts/profile.js"></script>
+	</body>
+</html>
