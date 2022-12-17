@@ -6,19 +6,33 @@
 		<link rel="stylesheet" href="/stylesheets/popup.css" />
 	</head>
 	<body>
-		<div id="popup" hidden>
+		<div id="popup-edit" class="popup" hidden>
 			<div class="popup-box">
-				<% if (typeof(message) != "undefined"){ %>
-				<div class="msg"><%= message %></div>
-				<% } %>
+				<h1>Edit your profile</h1>
 				<h3>Username: <%= user.username%></h3>
 				<h3>Role: <%= user.role%></h3>
 				<form action="/user/edit-profile" method="post">
+					<p>TODO - edit profile picture</p>
 					<label for="site">Site: </label>
 					<input type="text" name="site" value="<%= user.site %>" />
 					<button type="submit">Save</button>
 				</form>
-				<button onclick="popup_toggle()">Close popup</button>
+				<button onclick="popup_toggle('popup-edit')">Close popup</button>
+			</div>
+		</div>
+		<div id="popup-chngpass" class="popup" hidden>
+			<div class="popup-box">
+				<h1>Change your password</h1>
+				<form action="/user/change-password" method="post">
+					<p>Current password:</p>
+					<input type="password" name="current_password" />
+					<p>New password:</p>
+					<input type="password" name="new_password" />
+					<p>Repeat new password:</p>
+					<input type="password" name="re_new_password" />
+					<button type="submit">Change password</button>
+				</form>
+				<button onclick="popup_toggle('popup-chngpass')">Close popup</button>
 			</div>
 		</div>
 
@@ -32,7 +46,8 @@
 		<h2>Site: <%= user.site %></h2>
 		<br />
 
-		<button onclick="popup_toggle()">Edit</button>
+		<button onclick="popup_toggle('popup-edit')">Edit</button>
+		<button onclick="popup_toggle('popup-chngpass')">Change password</button>
 
 		<script src="/javascripts/profile.js"></script>
 	</body>

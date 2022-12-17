@@ -31,6 +31,31 @@ router.post("/admin-panel/create-user", isAdmin, (req, res, next) => {
 	});
 });
 
+router.post("/change-password", (req, res, next) => {
+	var { current_password, new_password, re_new_password } = req.body;
+	if (new_password != re_new_password) {
+		req.flash("profile-message", "New passwords doesnt match.");
+		res.redirect("/user/profile");
+	}
+	User.findById(req.user._id)
+		.then((foundUser) => {
+			foundUser
+				.changePassword(current_password, new_password)
+				.then(() => {
+					req.flash("profile-message", "Password has been changed.");
+					res.redirect("/user/profile");
+				})
+				.catch((error) => {
+					req.flash("profile-message", "Current password is invalid.");
+					res.redirect("/user/profile");
+				});
+		})
+		.catch((error) => {
+			req.flash("profile-message", "Current password is invalid.");
+			res.redirect("/user/profile");
+		});
+});
+
 router.get("/admin-panel/delete-user/:id", isAdmin, (req, res, next) => {
 	User.findByIdAndDelete(req.params.id, (err) => {
 		if (err) req.flash("admin-message", "Unable to delete user.");

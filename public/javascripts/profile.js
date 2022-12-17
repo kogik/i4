@@ -1,6 +1,5 @@
-var popup = document.getElementById("popup");
-
-function popup_toggle() {
+function popup_toggle(id) {
+	var popup = document.getElementById(id);
 	if (popup.hidden) {
 		// show popup
 		popup.hidden = false;
