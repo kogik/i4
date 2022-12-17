@@ -1,23 +1,32 @@
-
-table{
-    margin: 20px 0px;
+table {
+	margin: 20px 0px;
 }
 
-td{
-  padding: 5px;
-}
-  
-.create-user{
-    margin:50px 0px;
+td {
+	padding: 5px;
 }
 
-.create-user form{
-    width: fit-content;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: rgb(227, 227, 227);
+.create-user {
+	margin: 50px 0px;
 }
 
-table .header{
-    display: contents !important;
+.create-user form {
+	width: fit-content;
+	padding: 20px;
+	border-radius: 10px;
+	background-color: rgb(227, 227, 227);
+}
+
+table {
+	width: 1000px;
+	border: 1px solid black;
+	border-spacing: unset;
+}
+
+table td {
+	border: 1px solid black;
+}
+
+table .header {
+	display: contents !important;
 }

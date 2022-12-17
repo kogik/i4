@@ -1,68 +1,71 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/stylesheets/admin-panel.css' />
-    <script>var users = <%= users %> </script>
-  </head>
-  <body>
-    <h3>Welcome in admin-panel panel here you can see all workers and edit their roles ...</h3>
-    <a href="/user/dashboard">back to dashboard</a>
+	<head>
+		<title><%= title %></title>
+		<link rel="stylesheet" href="/stylesheets/style.css" />
+		<link rel="stylesheet" href="/stylesheets/admin-panel.css" />
+	</head>
+	<body>
+		<h1>ADMIN PANEL</h1>
+		<a href="/user/dashboard">back to dashboard</a>
 
-    <% if (typeof(message) != "undefined"){ %>
-      <div class="msg"><%= message %></div>
-    <% } %>
+		<% if (typeof(message) != "undefined"){ %>
+		<div class="msg"><%= message %></div>
+		<% } %>
 
-    <div class="create-user">
-      <form action="/user/admin-panel/create-user" method="post">
-        <label for="username">Username: </label><input type="text" name="username" id="username">
-        <label for="password">Password: </label><input type="password" name="password" id="password">
-        <label for="role">Role: </label> <select name="role" id="role">
-          <option value="admin">Admin</option>
-          <option value="employee">Employee</option>
-          <option value="self-employed">Self-employed</option>
-        </select>
-        <button type="submit">Create</button>
-      </form>
-    </div>  
-    <input type="text" id="myInput" onkeyup="find()" placeholder="Search for names.." title="Type in a name">
-    <table style="width: 30%;border-spacing: unset;" border="1" id="users-table">
-      <tbody>
-      <tr class="header"><td>Username</td><td>Role</td><td>Site</td><td></td></tr>
-      <% for (i of users) {%>
-        <tr>
-          <td><%= i.username %></td>
-          <td><%= i.role %></td>
-          <td><%= i.site %></td>
-          <td>
-            <a href="/user/admin-panel/delete-user/<%= i._id %>">delete</a>
-            <a onclick="alert('popup menu na upravu mena hesla role ... ')">edit</a>
-          </td>
-        </tr>
-      <% } %>
-      
-      </tbody>
-      </table>
-  </body>
-  <script>
-    function find() {
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("users-table");
-    tr = table.getElementsByTagName("tr");
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
-      }       
-    }
-  }
-</script>
+		<div class="create-user">
+			<form action="/user/admin-panel/create-user" method="post">
+				<label for="username">Username: </label><input type="text" name="username" id="username" /> <label for="password">Password: </label><input type="password" name="password" id="password" />
+				<label for="role">Role: </label>
+				<select name="role" id="role">
+					<option value="admin">Admin</option>
+					<option value="employee">Employee</option>
+					<option value="self-employed">Self-employed</option>
+				</select>
+				<button type="submit">Create</button>
+			</form>
+		</div>
+		<input type="text" id="myInput" onkeyup="find()" placeholder="Search for names.." title="Type in a name" />
+		<table id="users-table">
+			<tbody>
+				<tr class="header">
+					<td>Username</td>
+					<td>Role</td>
+					<td>Site</td>
+					<td></td>
+				</tr>
+				<% for (i of users) {%>
+				<tr>
+					<td><%= i.username %></td>
+					<td><%= i.role %></td>
+					<td><%= i.site %></td>
+					<td>
+						<a href="/user/admin-panel/delete-user/<%= i._id %>">delete</a>
+						<a onclick="alert('popup menu na upravu mena hesla role ... ')">edit</a>
+					</td>
+				</tr>
+				<% } %>
+			</tbody>
+		</table>
+	</body>
+	<script>
+		function find() {
+			var input, filter, table, tr, td, i, txtValue;
+			input = document.getElementById("myInput");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("users-table");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[0];
+				if (td) {
+					txtValue = td.textContent || td.innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	</script>
 </html>
