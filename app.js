@@ -7,6 +7,7 @@ var mongoose = require("mongoose");
 var { User, UserSchema } = require("./models/user");
 var passport = require("passport");
 var flash = require("connect-flash");
+var fileUpload = require("express-fileupload");
 
 var indexRouter = require("./routes/index");
 var userRouter = require("./routes/user");
@@ -47,6 +48,9 @@ app.use(
 	})
 );
 app.use(flash());
+
+// express-fileupload
+app.use(fileUpload());
 
 // Passport.js
 app.use(passport.initialize());

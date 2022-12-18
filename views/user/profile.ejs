@@ -11,15 +11,22 @@
 				<h1>Edit your profile</h1>
 				<h3>Username: <%= user.username%></h3>
 				<h3>Role: <%= user.role%></h3>
-				<form action="/user/edit-profile" method="post">
-					<p>TODO - edit profile picture</p>
+				<form action="/user/edit-profile" method="post" enctype="multipart/form-data">
 					<label for="site">Site: </label>
 					<input type="text" name="site" value="<%= user.site %>" />
+					<br />
+
+					<label for="avatar">Avatar: </label>
+					<input type="file" name="avatar" />
+
+					<br />
+
 					<button type="submit">Save</button>
 				</form>
 				<button onclick="popup_toggle('popup-edit')">Close popup</button>
 			</div>
 		</div>
+
 		<div id="popup-chngpass" class="popup" hidden>
 			<div class="popup-box">
 				<h1>Change your password</h1>
@@ -30,6 +37,7 @@
 					<input type="password" name="new_password" />
 					<p>Repeat new password:</p>
 					<input type="password" name="re_new_password" />
+
 					<button type="submit">Change password</button>
 				</form>
 				<button onclick="popup_toggle('popup-chngpass')">Close popup</button>
@@ -41,7 +49,7 @@
 		<% } %>
 
 		<a href="/user/dashboard">back to dashboard</a><br />
-		<img src="" width="100px" height="100px" style="margin-top: 30px" />
+		<img src="/images/avatars/<%= user.avatar %>" width="200px" style="margin-top: 30px" />
 		<h2>Username: <%= user.username %></h2>
 		<h2>Role: <%= user.role %></h2>
 		<h2>Site: <%= user.site %></h2>

@@ -12,7 +12,11 @@ const UserSchema = new mongoose.Schema({
 	},
 	role: {
 		type: String,
-		default: "worker",
+		require: true,
+	},
+	avatar: {
+		type: String,
+		default: "default.png",
 	},
 	site: {
 		type: String,

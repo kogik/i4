@@ -66,8 +66,15 @@ router.get("/admin-panel/delete-user/:id", isAdmin, (req, res, next) => {
 
 router.post("/edit-profile", (req, res, next) => {
 	var { site } = req.body;
-	User.findByIdAndUpdate(req.user._id, { site: site }, (err) => {
-		if (err) req.flash("profile-message", "Unable to edit profile informations.");
+	var avatar = null;
+	if (req.files.avatar) {
+		req.files.avatar.mv("./public/images/avatars/" + req.user._id + ".png");
+		avatar = req.user._id + ".png";
+	} else {
+		avatar = req.user.avatar;
+	}
+	User.findByIdAndUpdate(req.user._id, { site: site, avatar: avatar }, (error) => {
+		if (error) req.flash("profile-message", "Unable to edit profile informations.");
 		else req.flash("profile-message", "User informations has been saved.");
 		res.redirect("/user/profile");
 	});
