@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title><%= title %></title>
+		<link rel="stylesheet" href="/stylesheets/admin-panel.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+		<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<div class="container">
+			<%- include('nav') -%>
+			<section class="attendance">
+				<div class="attendance-list">
+					<h1>Attendance List</h1>
+					<form id="filter-form">
+						<label for="name-input">Name:</label>
+						<input type="text" id="myInput" placeholder="Name or site" />
+						<label for="date-filter">Date:</label>
+						<input type="date" id="date-filter" name="date-filter" />
+						<button type="submit">Filter</button>
+					</form>
+					<table id="users-table">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Site</th>
+								<th>Status</th>
+								<th>Date</th>
+								<th>Log in Time</th>
+								<th>Log out Time</th>
+								<th>Details</th>
+							</tr>
+						</thead>
+						<tbody>
+							<div id="element-list"></div>
+						</tbody>
+					</table>
+				</div>
+			</section>
+		</div>
+		<script src="/javascripts/admin-attendance.js"></script>
+	</body>
+</html>

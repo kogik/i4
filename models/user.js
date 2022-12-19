@@ -21,8 +21,8 @@ const UserSchema = new mongoose.Schema({
 	site: {
 		type: String,
 	},
-	attendence: {
-		type: Object,
+	attendance: {
+		type: [Object],
 	},
 });
 

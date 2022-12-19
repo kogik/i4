@@ -11,6 +11,7 @@ var fileUpload = require("express-fileupload");
 
 var indexRouter = require("./routes/index");
 var userRouter = require("./routes/user");
+var adminRouter = require("./routes/admin-panel");
 
 const { env } = require("process");
 
@@ -30,6 +31,7 @@ mongoose
 	.catch((err) => console.log(err));
 
 // view engine setup
+app.engine("ejs", require("express-ejs-extend")); // add this line
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
@@ -50,7 +52,11 @@ app.use(
 app.use(flash());
 
 // express-fileupload
-app.use(fileUpload());
+app.use(
+	fileUpload({
+		limits: { fileSize: 8 * 1024 * 1024 },
+	})
+);
 
 // Passport.js
 app.use(passport.initialize());
@@ -71,8 +77,14 @@ function isLoggedOut(req, res, next) {
 	res.redirect("/");
 }
 
+function isAdmin(req, res, next) {
+	if (req.user.role == "admin") return next();
+	return res.redirect("/user/dashboard");
+}
+
 app.use("/", indexRouter);
 app.use("/user", isLoggedIn, userRouter);
+app.use("/admin-panel", isLoggedIn, isAdmin, adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

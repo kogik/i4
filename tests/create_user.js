@@ -9,7 +9,7 @@ mongoose
 	.then(() => console.log("[DB] > connected"))
 	.catch((err) => console.log(err));
 
-User.register({ username: "fero", role: "admin" }, "123", (err) => {
+User.register({ username: "fero", role: "admin", site: "JSH5" }, "123", (err) => {
 	if (err) console.log(err);
 	else console.log("user created");
 });

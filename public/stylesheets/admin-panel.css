@@ -1,32 +1,190 @@
-table {
-	margin: 20px 0px;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+* {
+	margin: 0;
+	padding: 0;
+	outline: none;
+	border: none;
+	text-decoration: none;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
 }
 
-td {
-	padding: 5px;
+body {
+	background: linear-gradient(to right, #113b77, #2460b9);
 }
 
-.create-user {
-	margin: 50px 0px;
+nav {
+	position: sticky;
+	top: 0;
+	bottom: 0;
+	height: 100vh;
+	left: 0;
+	width: 90px;
+	/* width: 280px; */
+	background: white;
+	overflow: hidden;
+	transition: 1s;
 }
 
-.create-user form {
-	width: fit-content;
+nav:hover {
+	width: 280px;
+	transition: 1s;
+}
+
+.logo {
+	text-align: center;
+	display: flex;
+	padding-bottom: 3rem;
+}
+
+.logo img {
+	width: 45px;
+	height: 45px;
+	border-radius: 50%;
+}
+
+.logo span {
+	font-weight: bold;
+	padding-left: 15px;
+	font-size: 18px;
+	text-transform: uppercase;
+	margin-top: 10px;
+}
+
+a {
+	position: relative;
+	width: 280px;
+	font-size: 14px;
+	color: rgb(85, 83, 83);
+	display: table;
+	padding: 10px;
+	font-weight: 500;
+}
+
+nav .fas {
+	position: relative;
+	width: 70px;
+	height: 40px;
+	top: 15px;
+	font-size: 20px;
+	text-align: center;
+}
+
+.nav-item {
+	position: relative;
+	top: 12px;
+	margin-left: 10px;
+}
+
+a:hover {
+	background: #eee;
+}
+
+a:hover i {
+	transition: 0.5s;
+	color: #113b77;
+}
+
+.logout {
+	position: absolute;
+	bottom: 10px;
+}
+
+.container {
+	display: flex;
+}
+
+/* Attendance list section */
+
+.attendance {
+	text-transform: capitalize;
+	padding: 25px;
+	position: relative;
+	width: 100%;
+}
+
+.attendance-list {
+	width: 100%;
 	padding: 20px;
-	border-radius: 10px;
-	background-color: rgb(227, 227, 227);
+	margin-top: 10px;
+	background: white;
+	border-radius: 15px;
+	box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
+	display: relative;
 }
 
-table {
-	width: 1000px;
-	border: 1px solid black;
-	border-spacing: unset;
+#users-table {
+	border-collapse: collapse;
+	margin: 25px 0;
+	font-size: 15px;
+	min-width: 100%;
+	overflow: hidden;
+	border-radius: 15px 15px 0px 0px;
 }
 
-table td {
-	border: 1px solid black;
+table thead tr {
+	color: white;
+	text-align: left;
+	font-weight: bold;
+	background: #113b77;
 }
 
-table .header {
-	display: contents !important;
+#users-table th,
+#users-table td {
+	padding: 12px 15px;
+	text-align: center;
+}
+
+#users-table tbody tr {
+	border-bottom: 1px solid white;
+}
+/* 
+.table tbody tr{
+    background: #f3f3f3;
+} */
+
+/* .table tbody tr.active{
+    font-weight: bold;
+    color: green;
+    
+} */
+
+#users-table tbody tr,
+thead {
+	border: 2px solid #113b77;
+}
+
+#users-table button {
+	padding: 6px 20px;
+	border-radius: 15px;
+	cursor: pointer;
+	background: transparent;
+	border: 2px solid #113b77;
+}
+
+#users-table button:hover {
+	background: #113b77;
+	color: white;
+	transition: 0.5s;
+}
+
+#filter-form {
+	display: absolute;
+	font-family: "Poppins", sans-serif;
+	flex-direction: column;
+	align-items: left;
+	margin: 20px 0;
+	padding: 10px;
+	font-weight: bold;
+	text-align: left;
+}
+
+#filter-form input {
+	width: 200px;
+	height: 30px;
+	font-size: 16px;
+	padding: 0 10px;
+	border: 1px solid #ccc;
+	border-radius: 15px;
 }

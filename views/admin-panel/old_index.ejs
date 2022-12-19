@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title><%= title %></title>
 		<link rel="stylesheet" href="/stylesheets/style.css" />
 		<link rel="stylesheet" href="/stylesheets/admin-panel.css" />
 	</head>
@@ -14,7 +13,7 @@
 		<% } %>
 
 		<div class="create-user">
-			<form action="/user/admin-panel/create-user" method="post">
+			<form action="/admin-panel/create-user" method="post">
 				<label for="username">Username: </label><input type="text" name="username" id="username" /> <label for="password">Password: </label><input type="password" name="password" id="password" />
 				<label for="role">Role: </label>
 				<select name="role" id="role">
@@ -40,7 +39,7 @@
 					<td><%= i.role %></td>
 					<td><%= i.site %></td>
 					<td>
-						<a href="/user/admin-panel/delete-user/<%= i._id %>">delete</a>
+						<a href="/admin-panel/delete-user/<%= i._id %>">delete</a>
 						<a onclick="alert('popup menu na upravu mena hesla role ... ')">edit</a>
 					</td>
 				</tr>
@@ -50,16 +49,18 @@
 	</body>
 	<script>
 		function find() {
-			var input, filter, table, tr, td, i, txtValue;
+			var input, filter, table, tr, username, i, txtValue;
 			input = document.getElementById("myInput");
 			filter = input.value.toUpperCase();
 			table = document.getElementById("users-table");
 			tr = table.getElementsByTagName("tr");
 			for (i = 0; i < tr.length; i++) {
-				td = tr[i].getElementsByTagName("td")[0];
-				if (td) {
-					txtValue = td.textContent || td.innerText;
-					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+				username = tr[i].getElementsByTagName("td")[0];
+				site = tr[i].getElementsByTagName("td")[2];
+				if (username || site) {
+					username = username.textContent || username.innerText;
+					site = site.textContent || site.innerText;
+					if (username.toUpperCase().indexOf(filter) > -1 || site.toUpperCase().indexOf(filter) > -1) {
 						tr[i].style.display = "";
 					} else {
 						tr[i].style.display = "none";

@@ -10,25 +10,9 @@ router.get("/dashboard", (req, res, next) => {
 	res.render("user/dashboard", { title: "i4 - dashboard", user: req.user });
 });
 
-router.get("/admin-panel", isAdmin, async (req, res, next) => {
-	User.find({}, (err, result) => {
-		if (err) console.log(err);
-		res.render("user/admin-panel", { title: "i4 - adminpanel", user: req.user, users: result, message: req.flash("admin-message") });
-	});
-});
-
 // logic
 router.get("/profile", (req, res, next) => {
 	res.render("user/profile", { title: "i4 - your profile", user: req.user, message: req.flash("profile-message") });
-});
-
-router.post("/admin-panel/create-user", isAdmin, (req, res, next) => {
-	console.log(req.body);
-	User.register({ username: req.body.username, role: req.body.role }, req.body.password, (err) => {
-		if (err) req.flash("admin-message", "Unable to create user.");
-		else req.flash("admin-message", "User " + req.body.username + " successfully created.");
-		res.redirect("/user/admin-panel");
-	});
 });
 
 router.post("/change-password", (req, res, next) => {
@@ -56,22 +40,24 @@ router.post("/change-password", (req, res, next) => {
 		});
 });
 
-router.get("/admin-panel/delete-user/:id", isAdmin, (req, res, next) => {
-	User.findByIdAndDelete(req.params.id, (err) => {
-		if (err) req.flash("admin-message", "Unable to delete user.");
-		else req.flash("admin-message", "User deleted.");
-		res.redirect("/user/admin-panel");
-	});
-});
-
 router.post("/edit-profile", (req, res, next) => {
 	var { site } = req.body;
-	var avatar = null;
-	if (req.files.avatar) {
-		req.files.avatar.mv("./public/images/avatars/" + req.user._id + ".png");
-		avatar = req.user._id + ".png";
-	} else {
-		avatar = req.user.avatar;
+	var avatar = req.user.avatar;
+	if (req.files) {
+		var { mimetype } = req.files.avatar;
+		// filters (requirements)
+		if (req.files.avatar.size > 8 * 1024 * 1024) {
+			req.flash("profile-message", "File is too large. (Maximum file size is 8mb)");
+			return res.redirect("/user/profile");
+		}
+		if (!(mimetype == "image/png" || mimetype == "image/jpeg")) {
+			req.flash("profile-message", "Invalid image filetype. (Allowed only .jpg, .jpeg, .png)");
+			return res.redirect("/user/profile");
+		}
+		mimetype = mimetype.split("/");
+		var filename = req.user._id + "." + mimetype[mimetype.length - 1];
+		req.files.avatar.mv("./public/images/avatars/" + filename);
+		avatar = filename;
 	}
 	User.findByIdAndUpdate(req.user._id, { site: site, avatar: avatar }, (error) => {
 		if (error) req.flash("profile-message", "Unable to edit profile informations.");
@@ -79,10 +65,5 @@ router.post("/edit-profile", (req, res, next) => {
 		res.redirect("/user/profile");
 	});
 });
-
-function isAdmin(req, res, next) {
-	if (req.user.role == "admin") return next();
-	return res.redirect("/user/dashboard");
-}
 
 module.exports = router;
