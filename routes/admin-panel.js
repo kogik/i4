@@ -23,6 +23,7 @@ router.get("/test", async (req, res, next) => {
 router.get("/attendance", async (req, res, next) => {
 	res.render("admin-panel/attendance", { title: "i4 - adminpanel", user: req.user, message: req.flash("admin-message") });
 });
+
 // API ?
 //
 //
@@ -43,7 +44,8 @@ router.post("/attendance", (req, res, next) => {
 
 	if (name || date) {
 		//magic
-		filter = { $and: [{ $or: [{ username: { $regex: name } }, { attendance: { $elemMatch: { site: { $regex: name } } } }] }, { attendance: { $elemMatch: { date: { $regex: date } } } }] };
+		var site = name.toLocaleUpperCase();
+		filter = { $and: [{ $or: [{ username: { $regex: name } }, { attendance: { $elemMatch: { site: { $regex: site } } } }] }, { attendance: { $elemMatch: { date: { $regex: date } } } }] };
 	}
 
 	User.find(filter)

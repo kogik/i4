@@ -5,6 +5,7 @@ const UserSchema = new mongoose.Schema({
 	username: {
 		type: String,
 		require: true,
+		lowercase: true,
 	},
 	password: {
 		type: String,
@@ -20,6 +21,7 @@ const UserSchema = new mongoose.Schema({
 	},
 	site: {
 		type: String,
+		uppercase: true,
 	},
 	attendance: {
 		type: [Object],

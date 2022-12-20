@@ -1,5 +1,94 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+<style>
+	@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
+	body {
+		background: linear-gradient(to right, #113b77, #2460b9);
+	}
+
+	nav {
+		position: sticky;
+		top: 0;
+		bottom: 0;
+		height: 100vh;
+		left: 0;
+		width: 90px;
+		/* width: 280px; */
+		background: white;
+		overflow: hidden;
+		transition: 1s;
+	}
+
+	nav:hover {
+		width: 280px;
+		transition: 1s;
+	}
+
+	.logo {
+		text-align: center;
+		display: flex;
+		padding-bottom: 3rem;
+		margin: 10px 10px 0px 10px;
+	}
+
+	.logo img {
+		width: 45px;
+		height: 45px;
+		border-radius: 50%;
+	}
+
+	.logo span {
+		font-weight: bold;
+		padding-left: 15px;
+		font-size: 18px;
+		text-transform: uppercase;
+		margin-top: 10px;
+		top: 0px;
+	}
+
+	a {
+		position: relative;
+		width: 280px;
+		font-size: 14px;
+		color: rgb(85, 83, 83);
+		display: table;
+		padding: 10px;
+		font-weight: 500;
+	}
+
+	nav .fas {
+		position: relative;
+		width: 70px;
+		height: 40px;
+		top: 15px;
+		font-size: 20px;
+		text-align: center;
+	}
+
+	.nav-item {
+		position: relative;
+		top: 12px;
+		margin-left: 10px;
+	}
+
+	a:hover {
+		background: #eee;
+	}
+
+	a:hover i {
+		transition: 0.5s;
+		color: #113b77;
+	}
+
+	.logout {
+		position: absolute;
+		bottom: 10px;
+	}
+
+	.container {
+		display: flex;
+	}
+</style>
 <nav>
 	<ul>
 		<li>
