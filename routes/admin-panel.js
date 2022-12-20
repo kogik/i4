@@ -40,9 +40,12 @@ router.post("/attendance", (req, res, next) => {
 	var { name, date } = req.body;
 	var filter = {};
 	console.log(name, date);
+
 	if (name || date) {
-		filter = { username: { $regex: name } };
+		//magic
+		filter = { $and: [{ $or: [{ username: { $regex: name } }, { attendance: { $elemMatch: { site: { $regex: name } } } }] }, { attendance: { $elemMatch: { date: { $regex: date } } } }] };
 	}
+
 	User.find(filter)
 		.then((users) => {
 			var attendance = [];

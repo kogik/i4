@@ -1,9 +1,11 @@
 $(document).ready(function () {
 	$.post("/admin-panel/attendance", {}, function (attendance) {
+		console.log(attendance);
 		for (i in attendance) {
-			$("tbody").append("<tr id='element'>" + "<td>" + attendance[i].username + "</td>" + "<td>" + attendance[i].site + "</td>" + "<td>" + attendance[i].status + "</td>" + "<td>" + dateFormat(new Date(attendance[i].date)) + "</td>" + "<td>" + attendance[i].login + "</td>" + "<td>" + attendance[i].logout + "</td>" + "<td><button>View</button></td></tr>");
+			$("tbody").append("<tr id='element'>" + "<td>" + attendance[i].username + "</td>" + "<td>" + attendance[i].site + "</td>" + "<td>" + attendance[i].status + "</td>" + "<td>" + attendance[i].date + "</td>" + "<td>" + attendance[i].login + "</td>" + "<td>" + attendance[i].logout + "</td>" + "<td><button>View</button></td></tr>");
 		}
 	});
+
 	$("#filter-form").on("submit", (e) => {
 		e.preventDefault();
 		console.log("filter submitted");
@@ -12,9 +14,10 @@ $(document).ready(function () {
 		console.log(name, date);
 
 		$.post("/admin-panel/attendance", { name, date }, function (attendance) {
+			console.log(attendance);
 			$("tbody").empty();
 			for (i in attendance) {
-				$("tbody").append("<tr id='element'>" + "<td>" + attendance[i].username + "</td>" + "<td>" + attendance[i].site + "</td>" + "<td>" + attendance[i].status + "</td>" + "<td>" + dateFormat(new Date(attendance[i].date)) + "</td>" + "<td>" + attendance[i].login + "</td>" + "<td>" + attendance[i].logout + "</td>" + "<td><button>View</button></td></tr>");
+				$("tbody").append("<tr id='element'>" + "<td>" + attendance[i].username + "</td>" + "<td>" + attendance[i].site + "</td>" + "<td>" + attendance[i].status + "</td>" + "<td>" + attendance[i].date + "</td>" + "<td>" + attendance[i].login + "</td>" + "<td>" + attendance[i].logout + "</td>" + "<td><button>View</button></td></tr>");
 			}
 		});
 	});
