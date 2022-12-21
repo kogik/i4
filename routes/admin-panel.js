@@ -13,10 +13,10 @@ var router = express.Router();
 router.get("/", async (req, res, next) => {
 	res.redirect("/admin-panel/attendance");
 });
-router.get("/test", async (req, res, next) => {
+router.get("/employes", async (req, res, next) => {
 	User.find({}, (err, result) => {
 		if (err) console.log(err);
-		res.render("admin-panel/old_index", { title: "i4 - adminpanel", user: req.user, users: result, message: req.flash("admin-message") });
+		res.render("admin-panel/employes", { title: "i4 - adminpanel", user: req.user, users: result, message: req.flash("admin-message") });
 	});
 });
 

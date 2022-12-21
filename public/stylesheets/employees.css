@@ -1,0 +1,188 @@
+/*  import google fonts */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+* {
+	margin: 0;
+	padding: 0;
+	outline: none;
+	border: none;
+	text-decoration: none;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+}
+
+/* MAin Section */
+.container {
+	display: flex;
+}
+
+.main {
+	position: relative;
+	padding: 60px;
+	width: 100%;
+	background: linear-gradient(to right, #113b77, #2460b9);
+}
+
+.main .users {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.users .card {
+	flex-basis: auto;
+	margin: 10px 0;
+	padding: 10px;
+	background: #fff;
+	text-align: center;
+	border-radius: 15px;
+	box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
+}
+
+.users .card img {
+	width: 70px;
+	height: 70px;
+	border-radius: 50%;
+}
+.users .card h4 {
+	text-transform: uppercase;
+}
+.users .card p {
+	font-size: 12px;
+	margin-bottom: 15px;
+	text-transform: uppercase;
+}
+
+/*Create users section  */
+.top-card {
+	width: 48%;
+	text-transform: capitalize;
+	font-family: "Poppins", sans-serif;
+	flex-direction: column;
+	font-weight: bold;
+	padding: 40px;
+	margin-top: 10px;
+	background: #fff;
+	border-radius: 15px;
+	box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
+	min-width: 306px;
+}
+
+.top-card h1 {
+	padding-left: 15px;
+	padding-bottom: 15px;
+	font-size: 21px;
+}
+.create {
+	padding: 40px;
+	margin-top: 10px;
+	background: #fff;
+	border-radius: 15px;
+	box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
+	min-width: 306px;
+}
+
+.top-card input {
+	width: 300px;
+	height: 30px;
+	font-size: 15px;
+	padding-left: 10px;
+	border: 1px solid #ccc;
+	border-radius: 15px;
+}
+
+#avatar {
+	width: 150px;
+}
+
+input:focus::placeholder {
+	color: transparent;
+}
+
+/* SEARCH */
+.search-users .search {
+	width: 15%;
+	color: black;
+	background: white;
+	border-radius: 15px;
+	font-weight: bold;
+	margin-top: 40px;
+}
+
+.search-users .search input {
+	background: transparent;
+	margin-left: 10px;
+	font-size: 15px;
+	padding: 8px;
+	font-weight: bold;
+}
+
+/* AVATAR */
+
+form .avatar {
+	text-align: center;
+}
+
+#avatar-preview {
+	width: 200px;
+	height: 200px;
+}
+
+.custom-file-input {
+	font-size: 14px;
+	font-weight: 400;
+	border-radius: 15px;
+	cursor: pointer;
+
+	background: transparent;
+	border: 1.5px solid #113b77;
+}
+
+.custom-file-input:hover {
+	background: #113b77;
+	color: white;
+	transition: 0.5s;
+}
+
+input[type="file"] {
+	display: none;
+}
+
+.top {
+	display: flex;
+	justify-content: space-between;
+}
+.grid {
+	display: grid;
+	padding: 30px;
+	border-right: 1px solid black;
+}
+
+#avatar-button {
+	margin-top: 25px;
+	border: 1.5px solid #113b77;
+	border-radius: 15px;
+	background: white;
+}
+
+#avatar-button:hover {
+	background: #113b77;
+	color: white;
+	transition: 0.5s;
+}
+
+.create-user-form {
+	padding: 30px;
+	display: flex;
+	justify-content: space-around;
+	flex-direction: column;
+}
+
+.create-user-form button {
+	width: 100px !important;
+	justify-content: flex-end;
+}
+
+#role {
+	font-size: 15px;
+}
