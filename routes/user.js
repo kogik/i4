@@ -1,6 +1,4 @@
 var express = require("express");
-var createHttpError = require("http-errors");
-var passport = require("passport");
 const { User } = require("../models/user");
 var router = express.Router();
 

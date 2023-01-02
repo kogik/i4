@@ -2,6 +2,8 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title><%= title %></title>
 		<link rel="stylesheet" href="/stylesheets/employees.css" />
 		<!-- Font Awesome Cdn Link -->
@@ -15,14 +17,19 @@
 				<div class="top">
 					<div class="top-card">
 						<h1>Create a New Employee</h1>
-						<form action="/admin-panel/create-user" method="post">
+						<form action="/admin-panel/create-user" method="post" enctype="multipart/form-data">
 							<div class="container">
 								<div class="grid">
 									<img id="avatar-preview" src="/images/avatars/default.png" alt="" />
-									<button id="avatar-button">Select avatar</button>
-									<input type="file" id="avatar" />
+									<button id="avatar-button" type="button">Select avatar</button>
+									<input type="file" name="avatar" id="avatar" />
 								</div>
 								<div class="create-user-form">
+									<% if (message.length > 0) { %>
+									<div class="error-box">
+										<p id="error-msg"><%= message %></p>
+									</div>
+									<% } %>
 									<label for="username">Username:</label>
 									<input type="text" name="username" id="username" placeholder="Name" />
 									<br />
@@ -36,7 +43,7 @@
 										<option value="self-employed">Self-employed</option>
 									</select>
 									<br />
-									<button class="create-button">Create</button>
+									<button id="create-button" type="submit">Create</button>
 								</div>
 							</div>
 						</form>
@@ -54,18 +61,17 @@
 						</form>
 					</div>
 				</div>
-
+				<br />
 				<div class="users">
 					<% for (i of users) {%>
-
 					<div class="card cardd">
 						<img src="/images/avatars/<%= i.avatar%>" />
 						<h4 class="card-title"><%= i.username%></h4>
 						<p><%= i.role%></p>
 						<p class="card-description"><%= i.site%></p>
-						<a href="#"> Profile </a>
-						<a href="#"> Edit </a>
-						<a href="/admin-panel/delete-user/<%= i._id%>">Delete</a>
+						<a href="#" class="profile"> Profile </a>
+						<a href="#" class="edit"> Edit </a>
+						<a href="/admin-panel/delete-user/<%= i._id%>" class="delete">Delete</a>
 					</div>
 					<% } %>
 				</div>
@@ -115,5 +121,45 @@
 			e.preventDefault();
 			fileInput.click();
 		});
+
+		//   ERROR MSGBOX
+
+		const form = document.querySelector("/admin-panel/create-user"),
+			eField = form.querySelector("username"),
+			eInput = eField.querySelector("input");
+
+		const error_box = form.querySelector(".error-box");
+		const error_msg = form.querySelector("#error-msg");
+
+		setInterval(() => {
+			if (error_msg.textContent.length > 0) {
+				error_box.hidden = false;
+			} else {
+				error_box.hidden = true;
+			}
+		}, 100);
+
+		form.onsubmit = (e) => {
+			e.preventDefault();
+			if (eInput.value == "") {
+				eField.classList.add("error");
+				error_msg.textContent = "Please enter your username.";
+				if (pInput.value == "") {
+					pField.classList.add("error");
+					error_msg.textContent = "Please enter your username and password.";
+				}
+			} else if (pInput.value == "") {
+				pField.classList.add("error");
+				error_msg.textContent = "Please enter your password.";
+			} else {
+				eField.classList.remove("error");
+				pField.classList.remove("error");
+
+				error_msg.textContent = "";
+
+				// e.submit()
+				document.getElementById("login-form").submit();
+			}
+		};
 	</script>
 </html>

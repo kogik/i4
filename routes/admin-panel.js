@@ -1,7 +1,8 @@
 var express = require("express");
 var createHttpError = require("http-errors");
 var passport = require("passport");
-const { User } = require("../models/user");
+var { User } = require("../models/user");
+var mongoose = require("mongoose");
 var router = express.Router();
 
 // RENDER
@@ -11,12 +12,12 @@ var router = express.Router();
 //
 
 router.get("/", async (req, res, next) => {
-	res.redirect("/admin-panel/attendance");
+	res.redirect("/admin-panel/employees");
 });
-router.get("/employes", async (req, res, next) => {
+router.get("/employees", async (req, res, next) => {
 	User.find({}, (err, result) => {
 		if (err) console.log(err);
-		res.render("admin-panel/employes", { title: "i4 - adminpanel", user: req.user, users: result, message: req.flash("admin-message") });
+		res.render("admin-panel/employees", { title: "i4 - adminpanel", user: req.user, users: result, message: req.flash("admin-message") });
 	});
 });
 
@@ -30,10 +31,28 @@ router.get("/attendance", async (req, res, next) => {
 //
 //
 router.post("/create-user", (req, res, next) => {
-	User.register({ username: req.body.username, role: req.body.role }, req.body.password, (err) => {
-		if (err) req.flash("admin-message", "Unable to create user.");
+	var avatar;
+	var newId = mongoose.Types.ObjectId();
+	if (req.files) {
+		var { mimetype } = req.files.avatar;
+		// filters (requirements)
+		if (req.files.avatar.size > 8 * 1024 * 1024) {
+			req.flash("admin-message", "File is too large. (Maximum file size is 8mb)");
+			return res.redirect("/admin-panel/employees");
+		}
+		if (!(mimetype == "image/png" || mimetype == "image/jpeg")) {
+			req.flash("admin-message", "Invalid image filetype. (Allowed only .jpg, .jpeg, .png)");
+			return res.redirect("/admin-panel/employees");
+		}
+		mimetype = mimetype.split("/");
+		var filename = req.user.newId + "." + mimetype[mimetype.length - 1];
+		req.files.avatar.mv("./public/images/avatars/" + filename);
+		avatar = filename;
+	}
+	User.register({ _id: newId, username: req.body.username, role: req.body.role, avatar: avatar }, req.body.password, (err) => {
+		if (err) req.flash("admin-message", "User already exists.");
 		else req.flash("admin-message", "User " + req.body.username + " successfully created.");
-		res.redirect("/user/admin-panel");
+		res.redirect("/admin-panel/employees");
 	});
 });
 
@@ -72,11 +91,16 @@ router.post("/attendance", (req, res, next) => {
 });
 
 router.get("/delete-user/:id", (req, res, next) => {
-	User.findByIdAndDelete(req.params.id, (err) => {
-		if (err) req.flash("admin-message", "Unable to delete user.");
-		else req.flash("admin-message", "User deleted.");
-		res.redirect("/user/admin-panel");
-	});
+	User.findByIdAndDelete(req.params.id)
+		.catch((error) => {
+			console.log(error);
+			req.flash("admin-message", "Unable to delete user.");
+			res.redirect("/admin-panel/employees");
+		})
+		.then(() => {
+			req.flash("admin-message", "User deleted.");
+			res.redirect("/admin-panel/employees");
+		});
 });
 
 module.exports = router;
