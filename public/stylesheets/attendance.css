@@ -92,7 +92,7 @@ thead {
 #filter-form button {
 	border-radius: 10px;
 	padding: 5px 20px;
-	background: linear-gradient(to right, #113b77, #2460b9);
+	background-image: linear-gradient(to right, #113b77, #2460b9);
 	color: white;
 	font-weight: bold;
 	font-size: 15px;

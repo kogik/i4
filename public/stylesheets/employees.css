@@ -31,8 +31,8 @@
 
 .users .card {
 	flex-basis: auto;
-	margin: 10px 0;
-	padding: 10px;
+	margin: 10px 0px;
+	padding: 20px;
 	background: #fff;
 	text-align: center;
 	border-radius: 15px;
@@ -43,6 +43,7 @@
 	width: 70px;
 	height: 70px;
 	border-radius: 50%;
+	object-fit: cover;
 }
 .users .card h4 {
 	text-transform: uppercase;
@@ -52,7 +53,9 @@
 	margin-bottom: 15px;
 	text-transform: uppercase;
 }
-
+.card-description{
+	height: 20px;
+}
 /*Create users section  */
 .top-card {
 	width: 49%;
@@ -124,9 +127,15 @@ form .avatar {
 }
 
 #avatar-preview {
-	width: 200px;
-	height: 200px;
-	border-radius: 15px;
+	
+    width: 200px;
+    height: 200px;
+	object-fit: cover;
+    border-radius: 15px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .custom-file-input {
@@ -153,17 +162,26 @@ input[type="file"] {
 	justify-content: space-between;
 }
 .grid {
+	position: relative;
 	display: grid;
 	padding: 30px;
 	border-right: 1px solid black;
+	height: 350px;
+	width: 300px;
+	overflow: hidden;
 }
 
 #avatar-button {
+	position: absolute;
+	bottom: 30px;
+	left: 50%;
+	transform: translate(-50%,0);
 	border: 1.5px solid #113b77;
 	border-radius: 15px;
 	background: transparent;
 	cursor: pointer;
-	width: 200px !important;
+	width: 200px;
+	height: 43px;
 	justify-content: flex-end;
 }
 
@@ -193,10 +211,11 @@ input[type="file"] {
 	display: flex;
 	justify-content: space-around;
 	flex-direction: column;
+	width: 70%;
 }
 
 .create-user-form input {
-	width: 360px;
+	width: 100%;
 }
 
 #role {

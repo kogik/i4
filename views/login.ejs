@@ -1,39 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="/stylesheets/login2.css" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
-		<title><%= title %></title>
-	</head>
-	<body>
-		<div class="wrapper">
-			<header>i4industry</header>
-			<form action="/login" method="POST" id="login-form">
-				<div class="error-box" hidden><p id="error-msg"><%= messages %></p></div>
-				<div class="field email">
-					<div class="input-area">
-						<input type="text" placeholder="Username" name="username" />
-						<i class="icon fas fa-user"></i>
-						<i class="error error-icon fas fa-exclamation-circle"></i>
-					</div>
-					<!-- <div class=" error error-txt">Username can't be blank</div>  -->
-				</div>
-				<div class="field password">
-					<div class="input-area">
-						<input type="password" placeholder="Password" name="password" />
-						<i class="icon fas fa-lock"></i>
-						<i class="error error-icon fas fa-exclamation-circle"></i>
-					</div>
-					<!-- <div class="error error-txt">Password can't be blank</div>  -->
-				</div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/stylesheets/login.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+        <title><%= title %></title>
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>i4industry</header>
+            <form action="/login" method="POST" id="login-form">
+                <div class="error-box" hidden><p id="error-msg"><%= messages %></p></div>
+                <div class="field email">
+                    <div class="input-area">
+                        <input type="text" placeholder="Username" name="username" />
+                        <i class="icon fas fa-user"></i>
+                        <i class="error error-icon fas fa-exclamation-circle"></i>
+                    </div>
+                    <!-- <div class=" error error-txt">Username can't be blank</div>  -->
+                </div>
+                <div class="field password">
+                    <div class="input-area">
+                        <input type="password" placeholder="Password" name="password" />
+                        <i class="icon fas fa-lock"></i>
+                        <i class="error error-icon fas fa-exclamation-circle"></i>
+                    </div>
+                    <!-- <div class="error error-txt">Password can't be blank</div>  -->
+                </div>
 
-				<input type="submit" value="Login" />
-			</form>
-		</div>
+                <input type="submit" value="Login" />
+            </form>
+        </div>
 
-		<script src="/javascripts/login2.js"></script>
-	</body>
+        <script src="/javascripts/login.js"></script>
+    </body>
 </html>

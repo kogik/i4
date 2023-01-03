@@ -59,7 +59,6 @@ router.post("/create-user", (req, res, next) => {
 router.post("/attendance", (req, res, next) => {
 	var { name, date } = req.body;
 	var filter = {};
-	console.log(name, date);
 
 	if (name || date) {
 		//magic
@@ -87,6 +86,7 @@ router.post("/attendance", (req, res, next) => {
 		})
 		.catch((error) => {
 			console.log(error);
+			res.send(error)
 		});
 });
 

@@ -12,7 +12,6 @@ $(document).ready(function () {
 		console.log("filter submitted");
 		var name = $("#myInput")[0].value.toLocaleLowerCase(),
 			date = $("#date-filter")[0].value;
-		console.log(name, date);
 
 		$.post("/admin-panel/attendance", { name, date }, function (attendance) {
 			console.log(attendance);
