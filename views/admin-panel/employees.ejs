@@ -1,165 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title><%= title %></title>
-		<link rel="stylesheet" href="/stylesheets/employees.css" />
-		<!-- Font Awesome Cdn Link -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-	</head>
-	<body>
-		<div class="container">
-			<%- include('nav') -%>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= title %></title>
+        <link rel="stylesheet" href="/stylesheets/employees.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="container">
+            <%- include('nav') -%>
 
-			<div class="main">
-				<div class="top">
-					<div class="top-card">
-						<h1>Create a New Employee</h1>
-						<form action="/admin-panel/create-user" method="post" enctype="multipart/form-data">
-							<div class="container">
-								<div class="grid">
-									<img id="avatar-preview" src="/images/avatars/default.png" alt="" />
-									<button id="avatar-button" type="button">Select avatar</button>
-									<input type="file" name="avatar" id="avatar" />
-								</div>
-								<div class="create-user-form">
-									<% if (message.length > 0) { %>
-									<div class="error-box">
-										<p id="error-msg"><%= message %></p>
-									</div>
-									<% } %>
-									<label for="username">Username:</label>
-									<input type="text" name="username" id="username" placeholder="Name" />
-									<br />
-									<label for="password">Password:</label>
-									<input type="password" name="password" id="password" placeholder="Password" />
-									<br />
-									<label for="role">Role: </label>
-									<select name="role" id="role">
-										<option value="admin">Admin</option>
-										<option value="employee">Employee</option>
-										<option value="self-employed">Self-employed</option>
-									</select>
-									<br />
-									<button id="create-button" type="submit">Create</button>
-								</div>
-							</div>
-						</form>
-					</div>
-					<div class="top-card">
-						<h1>Statistics</h1>
-						<p>comming in future</p>
-					</div>
-				</div>
+            <div class="main">
+                <div class="top">
+                    <div class="top-card">
+                        <h1>Create a New Employee</h1>
+                        <form action="/admin-panel/create-user" method="post" enctype="multipart/form-data">
+                            <div class="container">
+                                <div class="grid">
+                                    <img id="avatar-preview" src="/images/avatars/default.png" alt="" />
+                                    <button id="avatar-button" type="button">Select avatar</button>
+                                    <input type="file" name="avatar" id="avatar" />
+                                </div>
+                                <div class="create-user-form">
+                                    <% if (message.length > 0) { %>
+                                    <div class="error-box">
+                                        <p id="error-msg"><%= message %></p>
+                                    </div>
+                                    <% } %>
+                                    <label for="username">Username:</label>
+                                    <input type="text" name="username" id="username" placeholder="Name" />
+                                    <br />
+                                    <label for="password">Password:</label>
+                                    <input type="password" name="password" id="password" placeholder="Password" />
+                                    <br />
+                                    <label for="role">Role: </label>
+                                    <select name="role" id="role">
+                                        <option value="admin">Admin</option>
+                                        <option value="employee">Employee</option>
+                                        <option value="self-employed">Self-employed</option>
+                                    </select>
+                                    <br />
+                                    <button id="create-button" type="submit">Create</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="top-card">
+                        <div id="users-stast" class="center" style="display: none">
+                            <div class="" id="donutchart" style="width: 450px; height: 450px"></div>
 
-				<div class="search-users">
-					<div class="search">
-						<form id="filter-form">
-							<input type="text" id="search-input" placeholder="Search... " />
-						</form>
-					</div>
-				</div>
-				<br />
-				<div class="users">
-					<% for (i of users) {%>
-					<div class="card cardd">
-						<img src="/images/avatars/<%= i.avatar%>" />
-						<h4 class="card-title"><%= i.username%></h4>
-						<p><%= i.role%></p>
-						<p class="card-description"><%= i.site%></p>
-						<a href="#" class="profile"> Profile </a>
-						<a href="#" class="edit"> Edit </a>
-						<a href="/admin-panel/delete-user/<%= i._id%>" class="delete">Delete</a>
-					</div>
-					<% } %>
-				</div>
-			</div>
-		</div>
-	</body>
+                            <div class="centerLabel center">
+                                <h1>Total users</h1>
+                                <h1 id="user-count">421</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-	<script>
-		// Get the search input and cards
-		const searchInput = document.querySelector("#search-input");
-		const cards = document.querySelectorAll(".cardd");
+                <div class="search-users">
+                    <div class="search">
+                        <form id="filter-form">
+                            <input type="text" id="search-input" placeholder="Search... " />
+                        </form>
+                    </div>
+                </div>
+                <br />
+                <div class="users">
+                    <% for (i of users) {%>
+                    <div class="card cardd">
+                        <img src="/images/avatars/<%= i.avatar%>" />
+                        <h4 class="card-title"><%= i.username%></h4>
+                        <p><%= i.role%></p>
+                        <p class="card-description"><%= i.site%></p>
+                        <a href="#" class="profile"> Profile </a>
+                        <a href="#" class="edit"> Edit </a>
+                        <a href="/admin-panel/delete-user/<%= i._id%>" class="delete">Delete</a>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </body>
 
-		// Add an event listener to the search input
-		searchInput.addEventListener("input", function () {
-			// Get the search term
-			const searchTerm = this.value.toLowerCase();
-
-			// Loop through each card
-			for (let card of cards) {
-				// Get the card title and description
-				const title = card.querySelector(".card-title").textContent.toLowerCase();
-				const description = card.querySelector(".card-description").textContent.toLowerCase();
-
-				// Check if the search term is in the title or description
-				if (title.includes(searchTerm) || description.includes(searchTerm)) {
-					// If it is, show the card
-					card.style.display = "block";
-				} else {
-					// If it isn't, hide the card
-					card.style.display = "none";
-				}
-			}
-		});
-
-		const fileInput = document.getElementById("avatar");
-		const preview = document.getElementById("avatar-preview");
-
-		fileInput.addEventListener("change", () => {
-			const reader = new FileReader();
-			reader.onload = () => {
-				preview.src = reader.result;
-			};
-			reader.readAsDataURL(fileInput.files[0]);
-		});
-
-		document.getElementById("avatar-button").addEventListener("click", function (e) {
-			e.preventDefault();
-			fileInput.click();
-		});
-
-		//   ERROR MSGBOX
-
-		const form = document.querySelector("/admin-panel/create-user"),
-			eField = form.querySelector("username"),
-			eInput = eField.querySelector("input");
-
-		const error_box = form.querySelector(".error-box");
-		const error_msg = form.querySelector("#error-msg");
-
-		setInterval(() => {
-			if (error_msg.textContent.length > 0) {
-				error_box.hidden = false;
-			} else {
-				error_box.hidden = true;
-			}
-		}, 100);
-
-		form.onsubmit = (e) => {
-			e.preventDefault();
-			if (eInput.value == "") {
-				eField.classList.add("error");
-				error_msg.textContent = "Please enter your username.";
-				if (pInput.value == "") {
-					pField.classList.add("error");
-					error_msg.textContent = "Please enter your username and password.";
-				}
-			} else if (pInput.value == "") {
-				pField.classList.add("error");
-				error_msg.textContent = "Please enter your password.";
-			} else {
-				eField.classList.remove("error");
-				pField.classList.remove("error");
-
-				error_msg.textContent = "";
-
-				// e.submit()
-				document.getElementById("login-form").submit();
-			}
-		};
-	</script>
+    <script src="/javascripts/admin-employees.js"></script>
 </html>

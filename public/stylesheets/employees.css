@@ -17,7 +17,7 @@
 
 .main {
 	position: relative;
-	padding: 60px;
+	margin: 40px;
 	width: 100%;
 	background: linear-gradient(to right, #113b77, #2460b9);
 }
@@ -58,13 +58,13 @@
 }
 /*Create users section  */
 .top-card {
+	position: relative;
 	width: 49%;
 	text-transform: capitalize;
 	font-family: "Poppins", sans-serif;
 	flex-direction: column;
 	font-weight: bold;
 	padding: 40px;
-	margin-top: 10px;
 	background: #fff;
 	border-radius: 15px;
 	box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
@@ -273,4 +273,24 @@ input[type="file"] {
 
 #search-input {
 	width: 100%;
+}
+
+.center{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.centerLabel
+{
+	margin-top: 10px;
+    position: absolute;
+    text-align: center;
+}
+
+.centerLabel h1{
+	text-transform: uppercase;
+	color: #113b77;
+	padding: 0;
 }
