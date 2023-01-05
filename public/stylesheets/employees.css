@@ -1,136 +1,136 @@
 /*  import google fonts */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 * {
-	margin: 0;
-	padding: 0;
-	outline: none;
-	border: none;
-	text-decoration: none;
-	box-sizing: border-box;
-	font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
 }
 
 /* MAin Section */
 .container {
-	display: flex;
+    display: flex;
 }
 
 .main {
-	position: relative;
-	margin: 40px;
-	width: 100%;
-	background: linear-gradient(to right, #113b77, #2460b9);
+    position: relative;
+    margin: 40px;
+    width: 100%;
+    background: linear-gradient(to right, #113b77, #2460b9);
 }
 
 .main .users {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 3vw 3.75%;
 }
 
 .users .card {
-	flex-basis: auto;
-	margin: 10px 0px;
-	padding: 20px;
-	background: #fff;
-	text-align: center;
-	border-radius: 15px;
-	box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
+    min-width: 200px;
+    width: 17%;
+    flex-basis: auto;
+    padding: 15px;
+    background: #fff;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
 }
 
 .users .card img {
-	width: 70px;
-	height: 70px;
-	border-radius: 50%;
-	object-fit: cover;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 .users .card h4 {
-	text-transform: uppercase;
+    text-transform: uppercase;
 }
 .users .card p {
-	font-size: 12px;
-	margin-bottom: 15px;
-	text-transform: uppercase;
+    font-size: 12px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
 }
-.card-description{
-	height: 20px;
+.card-description {
+    height: 20px;
 }
 /*Create users section  */
 .top-card {
-	position: relative;
-	width: 49%;
-	text-transform: capitalize;
-	font-family: "Poppins", sans-serif;
-	flex-direction: column;
-	font-weight: bold;
-	padding: 40px;
-	background: #fff;
-	border-radius: 15px;
-	box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
-	min-width: 306px;
+    position: relative;
+    width: 49%;
+    text-transform: capitalize;
+    font-family: "Poppins", sans-serif;
+    flex-direction: column;
+    font-weight: bold;
+    padding: 40px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
+    min-width: 306px;
 }
 
 .top-card h1 {
-	padding-left: 15px;
-	padding-bottom: 15px;
-	font-size: 21px;
+    padding-left: 15px;
+    padding-bottom: 15px;
+    font-size: 21px;
 }
 .create {
-	padding: 40px;
-	margin-top: 10px;
-	background: #fff;
-	border-radius: 15px;
-	box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
-	min-width: 306px;
+    padding: 40px;
+    margin-top: 10px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
+    min-width: 306px;
 }
 
 .top-card input {
-	width: 40%;
-	height: 30px;
-	font-size: 15px;
-	padding-left: 10px;
-	border: 1px solid #ccc;
-	border-radius: 15px;
+    width: 40%;
+    height: 30px;
+    font-size: 15px;
+    padding-left: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
 }
 
 #avatar {
-	width: 150px;
+    width: 150px;
 }
 
 input:focus::placeholder {
-	color: transparent;
+    color: transparent;
 }
 
 /* SEARCH */
 .search-users .search {
-	color: black;
-	background: white;
-	border-radius: 15px;
-	font-weight: bold;
-	margin-top: 40px;
-	width: 18%;
+    color: black;
+    background: white;
+    border-radius: 15px;
+    font-weight: bold;
+    margin-top: 40px;
+    width: 38%;
 }
 
 .search-users .search input {
-	background: transparent;
-	margin-left: 10px;
-	font-size: 15px;
-	padding: 8px;
-	font-weight: bold;
+    background: transparent;
+    margin-left: 10px;
+    font-size: 15px;
+    padding: 8px;
+    font-weight: bold;
 }
 
 /* AVATAR */
 
 form .avatar {
-	text-align: center;
+    text-align: center;
 }
 
 #avatar-preview {
-	
     width: 200px;
     height: 200px;
-	object-fit: cover;
+    object-fit: cover;
     border-radius: 15px;
     position: absolute;
     top: 40%;
@@ -139,158 +139,165 @@ form .avatar {
 }
 
 .custom-file-input {
-	font-size: 14px;
-	font-weight: 400;
-	border-radius: 15px;
-	cursor: pointer;
-	background: transparent;
-	border: 1.5px solid #113b77;
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 15px;
+    cursor: pointer;
+    background: transparent;
+    border: 1.5px solid #113b77;
 }
 
 .custom-file-input:hover {
-	background: #113b77;
-	color: white;
-	transition: 0.5s;
+    background: #113b77;
+    color: white;
+    transition: 0.5s;
 }
 
 input[type="file"] {
-	display: none;
+    display: none;
 }
 
 .top {
-	display: flex;
-	justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 .grid {
-	position: relative;
-	display: grid;
-	padding: 30px;
-	border-right: 1px solid black;
-	height: 350px;
-	width: 300px;
-	overflow: hidden;
+    position: relative;
+    display: grid;
+    padding: 30px;
+    border-right: 1px solid black;
+    height: 350px;
+    width: 300px;
+    overflow: hidden;
 }
 
 #avatar-button {
-	position: absolute;
-	bottom: 30px;
-	left: 50%;
-	transform: translate(-50%,0);
-	border: 1.5px solid #113b77;
-	border-radius: 15px;
-	background: transparent;
-	cursor: pointer;
-	width: 200px;
-	height: 43px;
-	justify-content: flex-end;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border: 1.5px solid #113b77;
+    border-radius: 15px;
+    background: transparent;
+    cursor: pointer;
+    width: 200px;
+    height: 43px;
+    justify-content: flex-end;
 }
 
 #avatar-button:hover {
-	background: #113b77;
-	color: white;
-	transition: 0.5s;
+    background: #113b77;
+    color: white;
+    transition: 0.5s;
 }
 
 #create-button {
-	border: 1.5px solid #113b77;
-	border-radius: 15px;
-	background: transparent;
-	cursor: pointer;
-	padding: 10px;
-	justify-content: flex-end;
+    border: 1.5px solid #113b77;
+    border-radius: 15px;
+    background: transparent;
+    cursor: pointer;
+    padding: 10px;
+    justify-content: flex-end;
 }
 
 #create-button:hover {
-	background: #113b77;
-	color: white;
-	transition: 0.5s;
+    background: #113b77;
+    color: white;
+    transition: 0.5s;
 }
 
 .create-user-form {
-	padding: 30px;
-	display: flex;
-	justify-content: space-around;
-	flex-direction: column;
-	width: 70%;
+    padding: 30px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    width: 70%;
 }
 
 .create-user-form input {
-	width: 100%;
+    width: 100%;
 }
 
 #role {
-	font-size: 15px;
+    font-size: 15px;
 }
 
 /* ERROR BOX */
 
 .error-box {
-	width: 100%;
-	background-color: rgb(255, 66, 66);
-	color: white;
-	border-radius: 15px;
-	margin-bottom: 20px;
+    width: 100%;
+    background-color: rgb(255, 66, 66);
+    color: white;
+    border-radius: 15px;
+    margin-bottom: 20px;
 }
 
 .error-box p {
-	width: 100%;
-	padding: 10px;
-	/* display: none; */
+    width: 100%;
+    padding: 10px;
+    /* display: none; */
 }
 
 #error-msg {
-	text-align: center;
+    text-align: center;
 }
 
 /* USERS CARD a */
 
 .users .card a {
-	border-radius: 15px;
-	cursor: pointer;
-	margin: 10px 0px 7px 0px;
-	background: transparent;
-	border: 1.5px solid #113b77;
+    width: 100%;
+    position: relative;
+    display: table;
+    cursor: pointer;
+    background: transparent;
+    border: 1.5px solid #113b77;
+    border-radius: 15px;
+    transition: 0.5s;
+    padding: 10px;
+    margin: 7px 0px;
+    color: rgb(85, 83, 83);
+    font-size: 14px;
+    font-weight: 500;
 }
 
-.users .card a {
-	transition: 0.5s;
+.users .card a:hover {
+    color: white;
 }
 
 .users .card a[class="profile"]:hover {
-	background: #113b77;
-	border: 1.5px solid #113b77;
+    background: #113b77;
+    border: 1.5px solid #113b77;
 }
 
 .users .card a[class="edit"]:hover {
-	background: #4ad489;
-	border: 1.5px solid #4ad489;
+    background: #4ad489;
+    border: 1.5px solid #4ad489;
 }
 
 .users .card a[class="delete"]:hover {
-	background: #dc3545;
-	border: 1.5px solid #dc3545;
+    background: #dc3545;
+    border: 1.5px solid #dc3545;
 }
 
 #search-input {
-	width: 100%;
+    width: 100%;
 }
 
-.center{
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
+.center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.centerLabel
-{
-	margin-top: 10px;
+.centerLabel {
+    margin-top: 10px;
     position: absolute;
     text-align: center;
 }
 
-.centerLabel h1{
-	text-transform: uppercase;
-	color: #113b77;
-	padding: 0;
+.centerLabel h1 {
+    text-transform: uppercase;
+    color: #113b77;
+    padding: 0;
 }

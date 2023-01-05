@@ -3,8 +3,8 @@ var createHttpError = require("http-errors");
 var passport = require("passport");
 var { User } = require("../models/user");
 var mongoose = require("mongoose");
-const e = require("connect-flash");
 var router = express.Router();
+var fs = require("fs");
 
 // RENDER
 //
@@ -46,7 +46,7 @@ router.post("/create-user", (req, res, next) => {
             return res.redirect("/admin-panel/employees");
         }
         mimetype = mimetype.split("/");
-        var filename = req.user.newId + "." + mimetype[mimetype.length - 1];
+        var filename = newId + "." + mimetype[mimetype.length - 1];
         req.files.avatar.mv("./public/images/avatars/" + filename);
         avatar = filename;
     }
@@ -134,7 +134,11 @@ router.get("/delete-user/:id", (req, res, next) => {
             req.flash("admin-message", "Unable to delete user.");
             res.redirect("/admin-panel/employees");
         })
-        .then(() => {
+        .then((user) => {
+            console.log(user.avatar);
+            fs.unlink("./public/images/avatars/" + user.avatar, (error) => {
+                if (error) console.log(error);
+            });
             req.flash("admin-message", "User deleted.");
             res.redirect("/admin-panel/employees");
         });
