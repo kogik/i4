@@ -21,7 +21,7 @@
                         <input type="text" id="day-slider" class="slider" />
                     </div>
                     <div>
-                        <h4>Select time</h4>
+                        <h4>Select start time</h4>
                         <p>(minutes)</p>
                         <input type="text" id="time-slider" class="slider" />
                     </div>
@@ -51,8 +51,8 @@
                             <tr>
                                 <td id="td">
                                     <div id="timeHighlight">
-                                        <i id="startLabel"></i>
-                                        <i id="endLabel"></i>
+                                        <i id="startTime"></i>
+                                        <i id="endTime"></i>
                                     </div>
                                 </td>
                                 <td></td>
@@ -71,10 +71,6 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                <div class="attendance-buttons">
-                    <button id="checkin">checkin</button>
-                    <button id="checkout">checkout</button>
                 </div>
             </div>
             <div class="container">
@@ -106,9 +102,6 @@
             set: [today],
             tooltip: false,
             range: false,
-            onChange: (val) => {
-                getData(val);
-            },
         });
 
         // time picker slider
@@ -118,103 +111,48 @@
             set: [0],
             tooltip: false,
             range: false,
-            onChange: (val) => {
-                if (endTime == null && startTime == null) {
-                    // select start time
-                    console.log(val);
-                    var now = new Date();
-                    now = addMinutes(now, val);
-                    var hours = now.getHours() < 10 ? "0" + now.getHours() : now.getHours();
-                    var minutes = now.getMinutes() < 10 ? "0" + now.getMinutes() : now.getMinutes();
-                    var final = hours + ":" + minutes;
-                    console.log(final);
-                    updateTimeline(final, final);
-                }
-                if (startTime && endTime == null) {
-                    console.log(val);
-                    var now = new Date();
-                    now = addMinutes(now, val);
-                    var hours = now.getHours() < 10 ? "0" + now.getHours() : now.getHours();
-                    var minutes = now.getMinutes() < 10 ? "0" + now.getMinutes() : now.getMinutes();
-                    var final = hours + ":" + minutes;
-                    console.log(final);
-
-                    updateTimeline(startTime, final);
-                }
-            },
         });
         //
         //
         //
         //
         // timeline
-        var td_width = $("#td").outerWidth(),
-            highlight = $("#timeHighlight"),
-            startLabel = $("#startLabel"),
-            endLabel = $("#endLabel"),
-            dayPicker = $("#day-slider"),
-            checkinButton = $("#checkin"),
-            checkoutButton = $("#checkout"),
-            startTime = null,
-            endTime = null;
 
-        function getData(date) {
-            highlight.css({ left: 0 });
-            highlight.css({ width: 0 });
-            startLabel.text("");
-            endLabel.text("");
-            startTime = null;
-            endTime = null;
-            $.post("/user/dashboard/attendance/preview", { date }, (data) => {
+        var td_width = $("#td").outerWidth();
+        var highlight = $("#timeHighlight");
+        var startLabel = $("#startTime");
+        var endLabel = $("#endTime");
+        var table = $("table");
+        var startTime;
+        var endTime;
+        $(document).ready(function () {
+            $.post("/user/attendance/dash", { date: day_slider.getValue() }, function (data) {
                 startTime = data.startTime;
                 endTime = data.endTime;
-                var now = new Date();
-                var hours = now.getHours() < 10 ? "0" + now.getHours() : now.getHours();
-                var minutes = now.getMinutes() < 10 ? "0" + now.getMinutes() : now.getMinutes();
-                var final = hours + ":" + minutes;
-                if (data.endTime) {
-                    // attendance done for the day
-                    checkinButton.prop("disabled", true);
-                    checkoutButton.prop("disabled", true);
-                    updateTimeline(data.startTime, data.endTime);
-                } else if (data.startTime) {
-                    // require checkout
-                    checkinButton.prop("disabled", true);
-                    checkoutButton.prop("disabled", false);
-                    updateTimeline(data.startTime, final);
-                } else {
-                    // require checkin
-                    checkinButton.prop("disabled", false);
-                    checkoutButton.prop("disabled", true);
-                    updateTimeline(final, final);
-                }
-            });
-        }
-
-        function updateTimeline(start, end) {
-            startLabel.text(start);
-            endLabel.text(end);
-            highlight.css({ left: map(timeStringToFloat(start), 0, 12, 2, 14) * td_width });
-            highlight.css({ width: map(timeStringToFloat(end), 0, 12, 2, 14) * td_width - map(timeStringToFloat(start), 0, 12, 2, 14) * td_width });
-        }
-
-        // checkin & checkout attendance buttons handler
-
-        $("#checkin").click(() => {
-            console.log("checkin");
-            $.post("/user/attendance/checkin", { date: day_slider.getValue(), time: $("#endLabel").text() }, () => {
-                location.reload();
             });
         });
+        var time_highlight = {
+            setStart: (time) => {
+                console.log(time, timetopx(time));
+                highlight.css({ left: timetopx(time) });
+                startLabel.text(timeFloatToString(time));
+            },
+            setEnd: (time) => {
+                console.log(time, timetopx(time));
+                highlight.width(timetopx(time) - highlight.position().left);
+                endLabel.text(timeFloatToString(time));
+            },
+        };
 
-        $("#checkout").click(() => {
-            $.post("/user/attendance/checkout", { date: day_slider.getValue(), time: $("#endLabel").text() }, () => {
-                location.reload();
-            });
-            console.log("checkout");
-        });
-
-        // formating functions
+        function timetopx(time) {
+            time == 0 ? 24 : time;
+            if (time >= 22 && time <= 24) {
+                time = time - 22;
+            } else {
+                time = time + 2;
+            }
+            return time * td_width;
+        }
 
         function timeFloatToString(minutes) {
             var sign = minutes < 0 ? "-" : "";
@@ -230,11 +168,7 @@
             return parseFloat(hours + minutes / 60).toFixed(2);
         }
 
-        function addMinutes(date, minutes) {
-            return new Date(date.getTime() + minutes * 60000);
-        }
-
-        function map(value, low1, high1, low2, high2) {
+        function map_range(value, low1, high1, low2, high2) {
             return low2 + ((high2 - low2) * (value - low1)) / (high1 - low1);
         }
     </script>

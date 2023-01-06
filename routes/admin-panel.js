@@ -76,8 +76,8 @@ router.post("/attendance", (req, res, next) => {
                     attendance.push({
                         username: user.username,
                         status: user.role,
-                        login: user.attendance[0].login,
-                        logout: user.attendance[0].logout,
+                        checkin: user.attendance[0].checkin,
+                        checkout: user.attendance[0].checkout,
                         site: user.attendance[0].site,
                         date: user.attendance[0].date,
                     });

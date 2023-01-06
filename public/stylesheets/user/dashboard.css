@@ -49,3 +49,109 @@ body {
     width: 200px;
     margin-top: 10px;
 }
+
+/* attendance timeline styling */
+
+.timeline {
+    margin: 20px;
+    margin-top: 70px;
+}
+.timeline table {
+    left: 52.5%;
+    position: relative;
+    transform: translate(-50%, 0px);
+}
+.timeline thead td {
+    font-size: small;
+    position: relative;
+    left: -15px;
+}
+.timeline tbody td {
+    border-left: 1px solid black;
+    border-bottom: 3px solid black;
+    width: 40px;
+    height: 15px;
+}
+
+.timeline tbody td:last-child {
+    border-right: 1px solid black;
+}
+
+#timeHighlight {
+    width: 0px;
+    height: 10px;
+    background-color: #006aff93;
+    position: absolute;
+    left: 0px;
+    bottom: 3px;
+    border-radius: 5px 5px 0 0;
+    transition: all 0.5s ease 0s;
+}
+
+#timeHighlight::before {
+    display: inline-block;
+    content: "";
+    position: relative;
+    top: 10px;
+    width: calc(100% - 1px);
+    height: 15px;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+}
+
+#startLabel,
+#endLabel {
+    position: absolute;
+    font-size: small;
+    font-style: normal;
+}
+
+#startLabel {
+    left: 0;
+    transform: translate(-50%, 0);
+}
+#endLabel {
+    right: 0;
+    transform: translate(50%, 0);
+}
+
+/* attendance buttons styling */
+
+.attendance-buttons {
+    text-align: center;
+    margin-top: 60px;
+}
+
+.attendance-buttons button {
+    padding: 10px 20px;
+    width: 140px;
+    text-align: center;
+    margin: 0 10px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s all;
+}
+
+.attendance-buttons button:disabled {
+    background-color: darkgray !important;
+    color: rgb(78, 78, 78);
+    cursor: default;
+}
+
+#checkin {
+    background-color: rgb(2, 199, 176);
+}
+#checkin:hover:enabled {
+    background-color: rgb(2, 140, 124);
+}
+
+#checkout {
+    background-color: rgb(255, 46, 46);
+}
+#checkout:hover:enabled {
+    background-color: rgb(175, 0, 0);
+}
