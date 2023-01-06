@@ -1,20 +1,60 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title><%= title %></title>
-		<link rel="stylesheet" href="/stylesheets/style.css" />
-		<link rel="stylesheet" href="/stylesheets/popup.css" />
-	</head>
-	<body>
-		<% if (typeof(message) != "undefined"){ %>
-		<div class="msg"><%= message %></div>
-		<% } %>
-		<h1>dashboard</h1>
-		<h3>Welcome <%= user.username %> !</h3>
-		<a href="/user/profile">profile</a>
-		<% if (user.role == "admin"){ %>
-		<a href="/admin-panel">admin panel</a>
-		<%}%>
-		<a href="/logout">logout</a>
-	</body>
+    <head>
+        <title><%= title %></title>
+        <link rel="stylesheet" href="/stylesheets/style.css" />
+        <link rel="stylesheet" href="/stylesheets/popup.css" />
+        <link rel="stylesheet" href="/stylesheets/user/dashboard.css" />
+        <link rel="stylesheet" href="/stylesheets/rSlider.min.css" />
+        <script src="/javascripts/rSlider.min.js"></script>
+    </head>
+    <body>
+        <%- include('nav') -%>
+        <div class="main">
+            <div class="container attendance">
+                <h2>Attendance</h2>
+                <div class="attendance-selectors">
+                    <div>
+                        <h4>Select day of the shift</h4>
+                        <p></p>
+                        <input type="text" id="day-slider" class="slider" />
+                    </div>
+                    <div>
+                        <h4>Select start time</h4>
+                        <p>(minutes)</p>
+                        <input type="text" id="time-slider" class="slider" />
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <h2>Travel expeses</h2>
+            </div>
+            <div class="container">
+                <h2>News & events</h2>
+            </div>
+            <div class="container">
+                <h2>coming soon ...</h2>
+            </div>
+        </div>
+    </body>
+    <script>
+        var date = new Date();
+        var today = date.getDate();
+        var month = date.getMonth() + 1;
+        var day_slider = new rSlider({
+            target: "#day-slider",
+            values: [today - 1 + "." + month + ".", today + "." + month + ".", today + 1 + "." + month + "."],
+            set: [today + "." + month + "."],
+            tooltip: false,
+            range: false,
+        });
+
+        var time_slider = new rSlider({
+            target: "#time-slider",
+            values: [-30, -20, -10, 0, 10, 20, 30],
+            set: [0],
+            tooltip: false,
+            range: false,
+        });
+    </script>
 </html>

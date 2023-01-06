@@ -1,0 +1,51 @@
+body {
+    background-image: linear-gradient(to right, #113b77, #2460b9);
+    color: white;
+}
+
+.main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 55px;
+    width: 90%;
+    margin: 2% 5%;
+    justify-content: center;
+}
+
+.container {
+    width: 40%;
+    height: 400px;
+    background-color: white;
+    color: black;
+    border-radius: 15px;
+}
+
+.container h2 {
+    margin-top: 10px;
+    text-align: center;
+}
+.container h4 {
+    text-align: center;
+    margin-top: 20px;
+}
+.container p {
+    text-align: center;
+    font-size: x-small;
+    height: 10px;
+}
+
+/* attendance styling */
+
+.attendance-selectors {
+    display: inline-flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.rs-container {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 200px;
+    margin-top: 10px;
+}
