@@ -26,9 +26,9 @@ if (env.NODE_ENV.indexOf("dev") > -1) mongoose_url = "mongodb://localhost:27017/
 else mongoose_url = "mongodb+srv://i4test:" + process.env.MONGODB_PASS + "@cluster0.i8av4uz.mongodb.net/";
 
 mongoose
-	.connect(mongoose_url, { useNewUrlParser: true, useUnifiedTopology: true })
-	.then(() => console.log("[DB] > connected"))
-	.catch((err) => console.log(err));
+    .connect(mongoose_url, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("[DB] > connected"))
+    .catch((err) => console.log(err));
 
 // view engine setup
 app.engine("ejs", require("express-ejs-extend")); // add this line
@@ -43,19 +43,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
-	session({
-		secret: env.SESSION_SECRET,
-		resave: false,
-		saveUninitialized: true,
-	})
+    session({
+        secret: env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: true,
+    })
 );
 app.use(flash());
 
 // express-fileupload
 app.use(
-	fileUpload({
-		limits: { fileSize: 8 * 1024 * 1024 },
-	})
+    fileUpload({
+        limits: { fileSize: 8 * 1024 * 1024 },
+    })
 );
 
 // Passport.js
@@ -68,18 +68,18 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 function isLoggedIn(req, res, next) {
-	if (req.isAuthenticated()) return next();
-	res.redirect("/login");
+    if (req.isAuthenticated()) return next();
+    res.redirect("/login");
 }
 
 function isLoggedOut(req, res, next) {
-	if (!req.isAuthenticated()) return next();
-	res.redirect("/");
+    if (!req.isAuthenticated()) return next();
+    res.redirect("/");
 }
 
 function isAdmin(req, res, next) {
-	if (req.user.role == "admin") return next();
-	return res.redirect("/user/dashboard");
+    if (req.user.role == "admin") return next();
+    return res.redirect("/user/dashboard");
 }
 
 app.use("/", indexRouter);
@@ -88,16 +88,16 @@ app.use("/admin-panel", isLoggedIn, isAdmin, adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-	next(createError(404));
+    next(createError(404));
 });
 
 // error handler
 app.use(function (err, req, res, next) {
-	res.locals.message = err.message;
-	res.locals.error = req.app.get("env") === "development" ? err : {};
+    res.locals.message = err.message;
+    res.locals.error = req.app.get("env") === "development" ? err : {};
 
-	res.status(err.status || 500);
-	res.render("error");
+    res.status(err.status || 500);
+    res.render("error");
 });
 
 module.exports = app;

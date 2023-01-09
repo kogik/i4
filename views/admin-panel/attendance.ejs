@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title><%= title %></title>
-        <link rel="stylesheet" href="/stylesheets/adminpanel/attendance.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
-        <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
-    </head>
-    <body>
-        <div class="container">
-            <%- include('nav') -%>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/stylesheets/adminpanel/attendance.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <%- include('nav') -%>
             <section class="attendance">
                 <div class="attendance-list">
                     <h1>Attendance List</h1>
@@ -27,10 +31,9 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Site</th>
-                                <th>Status</th>
                                 <th>Date</th>
-                                <th>Log in Time</th>
-                                <th>Log out Time</th>
+                                <th>Checkin Time</th>
+                                <th>Checkout Time</th>
                                 <th>Details</th>
                             </tr>
                         </thead>
@@ -38,7 +41,9 @@
                     </table>
                 </div>
             </section>
-        </div>
-        <script src="/javascripts/admin-attendance.js"></script>
-    </body>
+    </div>
+    <script src="/javascripts/essentials.js"></script>
+    <script src="/javascripts/admin-attendance.js"></script>
+</body>
+
 </html>

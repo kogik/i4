@@ -50,7 +50,8 @@
 }
 .right img {
     width: auto;
-    height: 50px;
+    border-radius: 20px;
+    margin: 5px 15px;
 }
 .right p {
     font-size: small;

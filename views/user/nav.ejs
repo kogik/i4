@@ -1,25 +1,28 @@
+<!-- prettier-ignore -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 <link rel="stylesheet" href="/stylesheets/user/nav.css" />
 <nav class="user-nav">
     <div class="logo">i4industry</div>
     <div class="left">
         <a href="/user/dashboard">dashboard</a>
-        <% if(user.role == "admin") { %>
-        <a href="/admin-panel">admin panel</a>
-        <% } %>
-        <a href="/user/attendance">attendance</a>
-        <a href="/user/reportkm">report km</a>
-        <a href="/user/learning">learning</a>
-        <a href="/user/faq">faq</a>
-        <a href="/user/contact">contact</a>
+        <% if(user.role=="admin" ) { %>
+            <a href="/admin-panel">admin panel</a>
+            <% } %>
+                <a href="/user/attendance">attendance</a>
+                <a href="/user/reportkm">report km</a>
+                <a href="/user/learning">learning</a>
+                <a href="/user/faq">faq</a>
+                <a href="/user/contact">contact</a>
     </div>
     <div class="right">
         <a href="#">
             <div class="user-info">
                 <%= user.username %>
-                <p><%= user.site %></p>
+                    <p>
+                        <%= user.site %>
+                    </p>
             </div>
-            <img src="/images/avatars/default.png" />
+            <img src="/images/avatars/<%=user.avatar %>" />
         </a>
         <div class="user-dropdown">
             <a href="/user/profile"><i class="fa-regular fa-id-badge"></i>Profile</a>

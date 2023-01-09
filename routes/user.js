@@ -1,5 +1,6 @@
 var express = require("express");
 const { User } = require("../models/user");
+const { Attendance } = require("../models/attendance");
 var router = express.Router();
 
 /* GET home page. */
@@ -66,45 +67,39 @@ router.post("/edit-profile", (req, res, next) => {
 
 router.post("/dashboard/attendance/preview", (req, res, next) => {
     var { date } = req.body;
-    User.findOne({ _id: req.user._id })
+    date = new Date(date);
+    Attendance.findOne({ $and: [{ user_id: req.user._id }, { date }] })
         .catch((error) => {
             console.log(error);
-            res.json({ status: "error", error });
+            res.status(500).json({ error });
         })
-        .then((user) => {
-            for (attend of user.attendance) {
-                if (attend.date == date) {
-                    return res.json({ status: "success", startTime: attend.checkin, endTime: attend.checkout });
-                }
-            }
-            res.json({ status: "no-attendance" });
+        .then((data) => {
+            console.log(data);
+            res.json(data);
         });
 });
 
 router.post("/attendance/checkin", (req, res, next) => {
-    var { date, time } = req.body;
-    User.findByIdAndUpdate(req.user._id, { $push: { attendance: { date, checkin: time } } })
+    var { date, time, site } = req.body;
+    Attendance.create({ username: req.user.username, user_id: req.user._id, date: new Date(date), site, checkin: time })
         .catch((error) => {
-            console.log(errr);
-            res.json({ status: "error", error });
+            console.log(error);
+            res.status(500).json({ error });
         })
-        .then(() => {
-            res.json({ status: "success" });
+        .then((attendance) => {
+            res.json(attendance);
         });
 });
 
 router.post("/attendance/checkout", async (req, res, next) => {
     var { date, time } = req.body;
-    User.findById(req.user._id)
+    Attendance.findOneAndUpdate({ $and: [{ user_id: req.user._id }, { date: new Date(date) }] }, { checkout: time })
         .catch((error) => {
             console.log(error);
+            res.status(500).json({ error });
         })
-        .then((user) => {
-            var doc = user.attendance.find((attendance) => attendance.date === date);
-            doc.checkout = time;
-            console.log(doc);
-            user.markModified("attendance");
-            user.save();
+        .then((attendance) => {
+            res.json(attendance);
         });
 });
 

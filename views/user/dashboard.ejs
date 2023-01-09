@@ -73,169 +73,43 @@
                     </table>
                 </div>
                 <div class="attendance-buttons">
-                    <button id="checkin">checkin</button>
-                    <button id="checkout">checkout</button>
+                    <button id="checkin" disabled>checkin</button>
+                    <button id="checkout" disabled>checkout</button>
                 </div>
             </div>
             <div class="container">
-                <h2>Travel expeses</h2>
+                <h2>
+                    Travel expeses
+                    <p>coming soon...</p>
+                </h2>
             </div>
-            <div class="container">
+            <div class="container news">
                 <h2>News & events</h2>
+                <div class="news-wrapper">
+                    <div class="new">
+                        <img src="https://public-library.safetyculture.io/media/template_9086e648e63e4ca78751c5af7c874743/de93e837-8e52-4ce6-af4e-187aab19e2e9" alt="" width="100px" height="100px" />
+                        <div class="new-content">
+                            <h3>Porusenie LOTO</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure saepe distinctio doloribus porro, voluptate odio provident nam qui! Neque assumenda velit modi, necessitatibus quasi odit. Nesciunt consequuntur quod aut perferendis.</p>
+                        </div>
+                    </div>
+                    <div class="new">
+                        <img src="https://pbs.twimg.com/profile_images/687200864973512704/or0o92p0_400x400.jpg" alt="" width="100px" height="100px" />
+                        <div class="new-content">
+                            <h3>TGW ASL Bypass test</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure saepe distinctio doloribus porro, voluptate odio provident nam qui! Neque assumenda velit modi, necessitatibus quasi odit. Nesciunt consequuntur quod aut perferendis.</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">more ...</a>
             </div>
             <div class="container">
-                <h2>coming soon ...</h2>
+                <h2>
+                    Statistics
+                    <p>coming soon...</p>
+                </h2>
             </div>
         </div>
     </body>
-    <script>
-        // day picker slider
-        var today = new Date().toISOString().split("T")[0];
-
-        var yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-        yesterday = yesterday.toISOString().split("T")[0];
-
-        var tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        tomorrow = tomorrow.toISOString().split("T")[0];
-
-        var day_slider = new rSlider({
-            target: "#day-slider",
-            values: [yesterday, today, tomorrow],
-            set: [today],
-            tooltip: false,
-            range: false,
-            onChange: (val) => {
-                getData(val);
-            },
-        });
-
-        // time picker slider
-        var time_slider = new rSlider({
-            target: "#time-slider",
-            values: [-30, -20, -10, 0, 10, 20, 30],
-            set: [0],
-            tooltip: false,
-            range: false,
-            onChange: (val) => {
-                if (endTime == null && startTime == null) {
-                    // select start time
-                    console.log(val);
-                    var now = new Date();
-                    now = addMinutes(now, val);
-                    var hours = now.getHours() < 10 ? "0" + now.getHours() : now.getHours();
-                    var minutes = now.getMinutes() < 10 ? "0" + now.getMinutes() : now.getMinutes();
-                    var final = hours + ":" + minutes;
-                    console.log(final);
-                    updateTimeline(final, final);
-                }
-                if (startTime && endTime == null) {
-                    console.log(val);
-                    var now = new Date();
-                    now = addMinutes(now, val);
-                    var hours = now.getHours() < 10 ? "0" + now.getHours() : now.getHours();
-                    var minutes = now.getMinutes() < 10 ? "0" + now.getMinutes() : now.getMinutes();
-                    var final = hours + ":" + minutes;
-                    console.log(final);
-
-                    updateTimeline(startTime, final);
-                }
-            },
-        });
-        //
-        //
-        //
-        //
-        // timeline
-        var td_width = $("#td").outerWidth(),
-            highlight = $("#timeHighlight"),
-            startLabel = $("#startLabel"),
-            endLabel = $("#endLabel"),
-            dayPicker = $("#day-slider"),
-            checkinButton = $("#checkin"),
-            checkoutButton = $("#checkout"),
-            startTime = null,
-            endTime = null;
-
-        function getData(date) {
-            highlight.css({ left: 0 });
-            highlight.css({ width: 0 });
-            startLabel.text("");
-            endLabel.text("");
-            startTime = null;
-            endTime = null;
-            $.post("/user/dashboard/attendance/preview", { date }, (data) => {
-                startTime = data.startTime;
-                endTime = data.endTime;
-                var now = new Date();
-                var hours = now.getHours() < 10 ? "0" + now.getHours() : now.getHours();
-                var minutes = now.getMinutes() < 10 ? "0" + now.getMinutes() : now.getMinutes();
-                var final = hours + ":" + minutes;
-                if (data.endTime) {
-                    // attendance done for the day
-                    checkinButton.prop("disabled", true);
-                    checkoutButton.prop("disabled", true);
-                    updateTimeline(data.startTime, data.endTime);
-                } else if (data.startTime) {
-                    // require checkout
-                    checkinButton.prop("disabled", true);
-                    checkoutButton.prop("disabled", false);
-                    updateTimeline(data.startTime, final);
-                } else {
-                    // require checkin
-                    checkinButton.prop("disabled", false);
-                    checkoutButton.prop("disabled", true);
-                    updateTimeline(final, final);
-                }
-            });
-        }
-
-        function updateTimeline(start, end) {
-            startLabel.text(start);
-            endLabel.text(end);
-            highlight.css({ left: map(timeStringToFloat(start), 0, 12, 2, 14) * td_width });
-            highlight.css({ width: map(timeStringToFloat(end), 0, 12, 2, 14) * td_width - map(timeStringToFloat(start), 0, 12, 2, 14) * td_width });
-        }
-
-        // checkin & checkout attendance buttons handler
-
-        $("#checkin").click(() => {
-            console.log("checkin");
-            $.post("/user/attendance/checkin", { date: day_slider.getValue(), time: $("#endLabel").text() }, () => {
-                location.reload();
-            });
-        });
-
-        $("#checkout").click(() => {
-            $.post("/user/attendance/checkout", { date: day_slider.getValue(), time: $("#endLabel").text() }, () => {
-                location.reload();
-            });
-            console.log("checkout");
-        });
-
-        // formating functions
-
-        function timeFloatToString(minutes) {
-            var sign = minutes < 0 ? "-" : "";
-            var min = Math.floor(Math.abs(minutes));
-            var sec = Math.floor((Math.abs(minutes) * 60) % 60);
-            return sign + (min < 10 ? "0" : "") + min + ":" + (sec < 10 ? "0" : "") + sec;
-        }
-
-        function timeStringToFloat(time) {
-            var hoursMinutes = time.split(/[.:]/);
-            var hours = parseInt(hoursMinutes[0], 10);
-            var minutes = hoursMinutes[1] ? parseInt(hoursMinutes[1], 10) : 0;
-            return parseFloat(hours + minutes / 60).toFixed(2);
-        }
-
-        function addMinutes(date, minutes) {
-            return new Date(date.getTime() + minutes * 60000);
-        }
-
-        function map(value, low1, high1, low2, high2) {
-            return low2 + ((high2 - low2) * (value - low1)) / (high1 - low1);
-        }
-    </script>
+    <script src="/javascripts/user-dashboard.js"></script>
 </html>

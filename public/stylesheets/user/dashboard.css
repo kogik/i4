@@ -20,15 +20,15 @@ body {
     border-radius: 15px;
 }
 
-.container h2 {
+.container > h2 {
     margin-top: 10px;
     text-align: center;
 }
-.container h4 {
+.attendance h4 {
     text-align: center;
     margin-top: 20px;
 }
-.container p {
+.attendance p {
     text-align: center;
     font-size: x-small;
     height: 10px;
@@ -154,4 +154,40 @@ body {
 }
 #checkout:hover:enabled {
     background-color: rgb(175, 0, 0);
+}
+
+/* news&events styling */
+
+.news-wrapper {
+    width: 100%;
+}
+.new {
+    display: inline-flex;
+    margin: 20px 40px;
+}
+.new-content {
+    display: block;
+    text-align: left;
+    padding: 0px 20px;
+    max-height: 100px;
+    overflow: hidden;
+}
+
+.new-content > p {
+    height: 70px;
+    width: 500px;
+    font-size: small;
+    overflow: hidden;
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
+    line-height: 18px;
+}
+
+.news a {
+    text-decoration: none;
+    text-align: center;
+    color: black;
+    position: relative;
+    margin-top: 40px;
+    left: 47%;
 }

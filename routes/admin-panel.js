@@ -2,6 +2,7 @@ var express = require("express");
 var createHttpError = require("http-errors");
 var passport = require("passport");
 var { User } = require("../models/user");
+var { Attendance } = require("../models/attendance");
 var mongoose = require("mongoose");
 var router = express.Router();
 var fs = require("fs");
@@ -59,36 +60,21 @@ router.post("/create-user", (req, res, next) => {
 
 router.post("/attendance", (req, res, next) => {
     var { name, date } = req.body;
-    var filter = {};
-
     if (name || date) {
-        //magic
-        var site = name.toLocaleUpperCase();
-        filter = { $and: [{ $or: [{ username: { $regex: name } }, { attendance: { $elemMatch: { site: { $regex: site } } } }] }, { attendance: { $elemMatch: { date: { $regex: date } } } }] };
+        // filter properly
+    } else {
+        // get latest 10 documents from attendance
+        Attendance.find()
+            .sort({ date: -1 })
+            .limit(10)
+            .catch((error) => {
+                res.status(500).json(error);
+            })
+            .then((docs) => {
+                console.log(docs);
+                res.json(docs);
+            });
     }
-
-    User.find(filter)
-        .then((users) => {
-            var attendance = [];
-            for (user in users) {
-                user = users[user];
-                if (user.attendance.length > 0) {
-                    attendance.push({
-                        username: user.username,
-                        status: user.role,
-                        checkin: user.attendance[0].checkin,
-                        checkout: user.attendance[0].checkout,
-                        site: user.attendance[0].site,
-                        date: user.attendance[0].date,
-                    });
-                }
-            }
-            res.send(attendance);
-        })
-        .catch((error) => {
-            console.log(error);
-            res.send(error);
-        });
 });
 
 router.post("/users-stats", (req, res, next) => {
