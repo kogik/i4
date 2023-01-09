@@ -3,16 +3,26 @@ const { User } = require("../models/user");
 const { Attendance } = require("../models/attendance");
 var router = express.Router();
 
-/* GET home page. */
+//
+//
+//
+// GETs
 
 router.get("/dashboard", (req, res, next) => {
     res.render("user/dashboard", { title: "i4 - dashboard", user: req.user });
 });
+router.get("/attendance", (req, res, next) => {
+    res.render("user/attendance", { title: "i4 - attendance", user: req.user });
+});
 
-// logic
 router.get("/profile", (req, res, next) => {
     res.render("user/profile", { title: "i4 - your profile", user: req.user, message: req.flash("profile-message") });
 });
+
+//
+//
+//
+// POSTs
 
 router.post("/change-password", (req, res, next) => {
     var { current_password, new_password, re_new_password } = req.body;
@@ -65,18 +75,32 @@ router.post("/edit-profile", (req, res, next) => {
     });
 });
 
-router.post("/dashboard/attendance/preview", (req, res, next) => {
+router.post("/attendance/preview", (req, res, next) => {
     var { date } = req.body;
-    date = new Date(date);
-    Attendance.findOne({ $and: [{ user_id: req.user._id }, { date }] })
-        .catch((error) => {
-            console.log(error);
-            res.status(500).json({ error });
-        })
-        .then((data) => {
-            console.log(data);
-            res.json(data);
-        });
+    if (date) {
+        date = new Date(date);
+        Attendance.findOne({ $and: [{ user_id: req.user._id }, { date }] })
+            .catch((error) => {
+                console.log(error);
+                res.status(500).json({ error });
+            })
+            .then((data) => {
+                console.log(data);
+                res.json(data);
+            });
+    } else {
+        Attendance.find({ user_id: req.user._id })
+            .sort({ date: -1 })
+            .limit(10)
+            .catch((error) => {
+                console.log(error);
+                res.status(500).json({ error });
+            })
+            .then((data) => {
+                console.log(data);
+                res.json(data);
+            });
+    }
 });
 
 router.post("/attendance/checkin", (req, res, next) => {

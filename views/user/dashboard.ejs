@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title><%= title %></title>
-        <link rel="stylesheet" href="/stylesheets/style.css" />
-        <link rel="stylesheet" href="/stylesheets/popup.css" />
-        <link rel="stylesheet" href="/stylesheets/user/dashboard.css" />
-        <link rel="stylesheet" href="/stylesheets/rSlider.min.css" />
-        <script src="/javascripts/rSlider.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    </head>
-    <body>
-        <%- include('nav') -%>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/popup.css" />
+    <link rel="stylesheet" href="/stylesheets/user/dashboard.css" />
+    <link rel="stylesheet" href="/stylesheets/rSlider.min.css" />
+    <script src="/javascripts/rSlider.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <%- include('nav') -%>
         <div class="main">
             <div class="container attendance">
                 <h2>Attendance</h2>
@@ -110,6 +114,7 @@
                 </h2>
             </div>
         </div>
-    </body>
-    <script src="/javascripts/user-dashboard.js"></script>
+</body>
+<script src="/javascripts/user/dashboard.js"></script>
+
 </html>

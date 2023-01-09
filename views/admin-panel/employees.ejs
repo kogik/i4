@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title><%= title %></title>
-        <link rel="stylesheet" href="/stylesheets/adminpanel/employees.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    </head>
-    <body>
-        <div class="container">
-            <%- include('nav') -%>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/stylesheets/adminpanel/employees.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <%- include('nav') -%>
 
             <div class="main">
                 <div class="top">
@@ -26,25 +30,27 @@
                                     <input type="file" name="avatar" id="avatar" />
                                 </div>
                                 <div class="create-user-form">
-                                    <% if (message.length > 0) { %>
-                                    <div class="error-box">
-                                        <p id="error-msg"><%= message %></p>
-                                    </div>
-                                    <% } %>
-                                    <label for="username">Username:</label>
-                                    <input type="text" name="username" id="username" placeholder="Name" />
-                                    <br />
-                                    <label for="password">Password:</label>
-                                    <input type="password" name="password" id="password" placeholder="Password" />
-                                    <br />
-                                    <label for="role">Role: </label>
-                                    <select name="role" id="role">
-                                        <option value="admin">Admin</option>
-                                        <option value="employee">Employee</option>
-                                        <option value="self-employed">Self-employed</option>
-                                    </select>
-                                    <br />
-                                    <button id="create-button" type="submit">Create</button>
+                                    <% if (message.length> 0) { %>
+                                        <div class="error-box">
+                                            <p id="error-msg">
+                                                <%= message %>
+                                            </p>
+                                        </div>
+                                        <% } %>
+                                            <label for="username">Username:</label>
+                                            <input type="text" name="username" id="username" placeholder="Name" />
+                                            <br />
+                                            <label for="password">Password:</label>
+                                            <input type="password" name="password" id="password" placeholder="Password" />
+                                            <br />
+                                            <label for="role">Role: </label>
+                                            <select name="role" id="role">
+                                                <option value="admin">Admin</option>
+                                                <option value="employee">Employee</option>
+                                                <option value="self-employed">Self-employed</option>
+                                            </select>
+                                            <br />
+                                            <button id="create-button" type="submit">Create</button>
                                 </div>
                             </div>
                         </form>
@@ -71,20 +77,27 @@
                 <br />
                 <div class="users">
                     <% for (i of users) {%>
-                    <div class="card cardd">
-                        <img src="/images/avatars/<%= i.avatar%>" />
-                        <h4 class="card-title"><%= i.username%></h4>
-                        <p><%= i.role%></p>
-                        <p class="card-description"><%= i.site%></p>
-                        <a href="#" class="profile"> Profile </a>
-                        <a href="#" class="edit"> Edit </a>
-                        <a href="/admin-panel/delete-user/<%= i._id%>" class="delete">Delete</a>
-                    </div>
-                    <% } %>
+                        <div class="card cardd">
+                            <img src="/images/avatars/<%= i.avatar%>" />
+                            <h4 class="card-title">
+                                <%= i.username%>
+                            </h4>
+                            <p>
+                                <%= i.role%>
+                            </p>
+                            <p class="card-description">
+                                <%= i.site%>
+                            </p>
+                            <a href="#" class="profile"> Profile </a>
+                            <a href="#" class="edit"> Edit </a>
+                            <a href="/admin-panel/delete-user/<%= i._id%>" class="delete">Delete</a>
+                        </div>
+                        <% } %>
                 </div>
             </div>
-        </div>
-    </body>
+    </div>
+</body>
 
-    <script src="/javascripts/admin-employees.js"></script>
+<script src="/javascripts/admin/employees.js"></script>
+
 </html>

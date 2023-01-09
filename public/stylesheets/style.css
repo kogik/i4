@@ -4,3 +4,6 @@
     padding: 0;
     font-family: "Poppins", sans-serif;
 }
+body {
+    background-image: linear-gradient(to right, #113b77, #2460b9);
+}

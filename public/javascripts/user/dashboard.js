@@ -22,7 +22,7 @@ var day_slider = new rSlider({
         endLabel.text("");
         startTime = null;
         endTime = null;
-        $.post("/user/dashboard/attendance/preview", { date: val }, (data) => {
+        $.post("/user/attendance/preview", { date: val }, (data) => {
             var now = new Date();
             var hours = now.getHours() + 1 < 10 ? "0" + (now.getHours() + 1) : now.getHours() + 1;
             var minutes = now.getMinutes() < 10 ? "0" + now.getMinutes() : now.getMinutes();

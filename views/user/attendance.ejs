@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>
+		<%= title %>
+	</title>
+	<link rel="stylesheet" href="/stylesheets/style.css" />
+	<link rel="stylesheet" href="/stylesheets/user/attendance.css" />
+	<link rel="stylesheet" href="/stylesheets/adminpanel/attendance.css" />
+	<script src="/javascripts/rSlider.min.js"></script>
+	<script src="/javascripts/essentials.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+</head>
+
+
+<body>
+	<%- include('nav') -%>
+
+		<div class="main">
+			<section class="attendance">
+				<div class="attendance-list">
+					<h1>Attendance List</h1>
+					<form id="filter-form">
+						<label for="date-filter">Date:</label>
+						<input type="date" id="date-filter" name="date-filter" />
+						<button type="submit">Filter</button>
+					</form>
+					<table id="users-table">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Site</th>
+								<th>Date</th>
+								<th>Checkin Time</th>
+								<th>Checkout Time</th>
+								<th>Details</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</section>
+		</div>
+		<script src="/javascripts/user/attendance.js"></script>
+</body>
+
+</html>
