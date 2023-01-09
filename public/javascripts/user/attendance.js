@@ -17,10 +17,12 @@ $("#filter-form").on("submit", (e) => {
     $.post("/user/attendance/preview", { date }, function (attendance) {
         console.log(attendance);
         $("tbody").empty();
-        var checkin = DateToHH_MM(new Date(attendance.checkin)),
-            checkout = DateToHH_MM(new Date(attendance.checkout)),
-            date = new Date(attendance.date).toUTCString().split("00")[0];
-        $("tbody").append("<tr id='element'>" + "<td>" + attendance.username + "</td>" + "<td>" + attendance.site + "</td>" + "<td>" + date + "</td>" + "<td>" + checkin + "</td>" + "<td>" + checkout + "</td>" + "<td><button>View</button></td></tr>");
+        for (i in attendance) {
+            var checkin = DateToHH_MM(new Date(attendance[i].checkin)),
+                checkout = DateToHH_MM(new Date(attendance[i].checkout)),
+                date = new Date(attendance[i].date).toUTCString().split("00")[0];
+            $("tbody").append("<tr id='element'>" + "<td>" + attendance[i].username + "</td>" + "<td>" + attendance[i].site + "</td>" + "<td>" + date + "</td>" + "<td>" + checkin + "</td>" + "<td>" + checkout + "</td>" + "<td><button>View</button></td></tr>");
+        }
         paginate();
     });
 });

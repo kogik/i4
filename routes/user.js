@@ -85,8 +85,7 @@ router.post("/attendance/preview", (req, res, next) => {
                 res.status(500).json({ error });
             })
             .then((data) => {
-                console.log(data);
-                res.json(data);
+                res.json([data]);
             });
     } else {
         Attendance.find({ user_id: req.user._id })
@@ -97,7 +96,6 @@ router.post("/attendance/preview", (req, res, next) => {
                 res.status(500).json({ error });
             })
             .then((data) => {
-                console.log(data);
                 res.json(data);
             });
     }
