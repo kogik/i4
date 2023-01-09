@@ -23,6 +23,7 @@ var day_slider = new rSlider({
         startTime = null;
         endTime = null;
         $.post("/user/attendance/preview", { date: val }, (data) => {
+            data = data[0];
             var now = new Date();
             var hours = now.getHours() + 1 < 10 ? "0" + (now.getHours() + 1) : now.getHours() + 1;
             var minutes = now.getMinutes() < 10 ? "0" + now.getMinutes() : now.getMinutes();
@@ -103,6 +104,15 @@ var td_width = $("#td").outerWidth(),
 function updateTimeline(start, end) {
     start = timeStringToFloat(start);
     end = timeStringToFloat(end);
+    if ((start >= 12 && start <= 22) || (end >= 12 && end <= 21)) {
+        console.log("time out of timeline");
+        highlight.css({ left: 0 });
+        highlight.css({ width: 0 });
+        startLabel.text("");
+        endLabel.text("Time out of timeline");
+
+        return;
+    }
     // console.log(start, end);
     var temp_end;
     var temp_start;
