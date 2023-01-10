@@ -74,7 +74,10 @@
               <ul>
                 <label for="role">Role:</label>
                 <br />
-                <select disabled id="input-role-select" value="<%=profile.role%>">
+                <select disabled id="input-role-select" selected="<%=profile.role%>">
+                  <option value="<%=profile.role%>" selected disabled hidden>
+                    <%=profile.role%>
+                  </option>
                   <option value="admin">admin</option>
                   <option value="self-employed">self-employed</option>
                   <option value="employee">employee</option>
@@ -148,9 +151,9 @@
     console.log(data)
     checkout = data.checkout ? addMinutes(new Date(data.checkout), 60) : new Date()
     checkin = addMinutes(new Date(data.checkin), 60)
-    date = addMinutes(new Date(data.date), 60)
-    $("#checkinLabel").text("Checkin: " + DateToHH_MM(checkin))
-    $("#checkoutLabel").text("Checkout: " + (data.checkout ? DateToHH_MM(checkout) : "not yet ..."))
+    date = addMinutes(new Date(data.date), 1000)
+    $("#checkinLabel").text("Checkin: " + DateToHH_MM(removeMinutes(checkin, 60)))
+    $("#checkoutLabel").text("Checkout: " + (data.checkout ? DateToHH_MM(removeMinutes(checkout, 60)) : "not yet ..."))
 
     if (new Date(data.checkin) > new Date()) {
       $("#checkinLabel").text("User has entered incorect checkin time")
@@ -280,10 +283,10 @@
 
     for (var x = 1; x <= 31; x++) {
       for (dat of data) {
-        if (new Date(dat.date).getDate() + 1 == new Date(2023, month, x).getDate()) {
+        if (new Date(dat.date).getDate() == new Date(2023, month, x).getDate()) {
           monthdata[0].data.push({
-            x: x.toString(), y: [new Date(dat.checkin).getTime(),
-            new Date(dat.checkout).getTime()]
+            x: x.toString(), y: [addMinutes(new Date(dat.checkin), 60).getTime(),
+            addMinutes(new Date(dat.checkout), 60).getTime()]
 
           })
           break
@@ -346,10 +349,10 @@
       var data = []
       for (var x = 1; x <= 31; x++) {
         for (dat of res) {
-          if (new Date(dat.date).getDate() + 1 == new Date(2023, month, x).getDate()) {
+          if (new Date(dat.date).getDate() == new Date(2023, month, x).getDate()) {
             data.push({
-              x: x.toString(), y: [new Date(dat.checkin).getTime(),
-              new Date(dat.checkout).getTime()]
+              x: x.toString(), y: [addMinutes(new Date(dat.checkin), 60).getTime(),
+              addMinutes(new Date(dat.checkout), 60).getTime()]
 
             })
             break

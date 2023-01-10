@@ -197,3 +197,7 @@
 #attendance-chart {
     margin-top: 20px;
 }
+
+.profile-right > h1 {
+    text-transform: uppercase;
+}

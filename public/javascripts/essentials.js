@@ -1,4 +1,4 @@
-function DateToHH_MM(date) {
+function DateToHH_MM(date, add) {
     if (!(date instanceof Date)) {
         return;
     }
@@ -13,4 +13,8 @@ function DateToHH_MM(date) {
 
 function addMinutes(date, minutes) {
     return new Date(date.getTime() + minutes * 60000);
+}
+
+function removeMinutes(date, minutes) {
+    return new Date(date.getTime() - minutes * 60000);
 }
