@@ -31,7 +31,6 @@ router.get("/attendance", async (req, res, next) => {
 router.get("/user/profile/:id", (req, res, next) => {
     User.findById(req.params.id)
         .catch((error) => {
-            req.flash("admin-message", "User with id=" + req.params.id + "does not exist.");
             res.redirect("/admin-panel/employees");
         })
         .then((user) => {
@@ -135,15 +134,34 @@ router.post("/users-stats", (req, res, next) => {
         });
 });
 
-router.post("/user/profile/edit/:id", (req, res, next) => {
-    var user_id = req.params.id;
-    var { username, role, email, mobile, site, car, address } = req.body;
+router.post("/user/profile/edit/", (req, res, next) => {
+    var { user_id, username, role, email, mobile, site, car, address } = req.body;
+    // Add checking for updated fields if there is no bullshit
     User.findByIdAndUpdate(user_id, { username, role, site, email, mobile, car, address })
         .catch((error) => {
             res.status(500).json(error);
         })
         .then((data) => {
             res.json(data);
+        });
+});
+
+router.post("/user/latest-attendance/", (req, res, next) => {
+    var { user_id } = req.body;
+    console.log(user_id);
+    User.findById(user_id)
+        .catch((error) => {
+            res.status(500).json(error);
+        })
+        .then((data) => {
+            console.log(data);
+            Attendance.findById(data.attendance[0])
+                .catch((error) => {
+                    res.status(500).json(error);
+                })
+                .then((attendance) => {
+                    res.json(attendance);
+                });
         });
 });
 

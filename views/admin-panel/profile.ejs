@@ -13,6 +13,7 @@
   <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <script src="/javascripts/essentials.js"></script>
 </head>
 
 <body>
@@ -34,8 +35,8 @@
                 <%= profile.role %>
               </p>
               <ul>
-                <li><label for="time-enter">Check in:</label> 0:30</li>
-                <li><label for="time-leave"> Check out:</label> 0:30</li>
+                <li id="checkinLabel"><label for="time-enter">Check in:</label> 0:30</li>
+                <li id="checkoutLabel"><label for="time-leave"> Check out:</label> 0:30</li>
               </ul>
               <div id="chart"></div>
             </div>
@@ -127,77 +128,85 @@
       </div>
   </div>
 </body>
-
 <script>
-  const dataday = [
-    {
-      name: "Current Day",
-      data: [
-        {
-          x: "",
-          y: [new Date(1673388000).getTime(), new Date(1673424000).getTime()],
+
+  $.post("/admin-panel/user/latest-attendance/", { user_id: "<%= profile._id %>" }, (data) => {
+    console.log(data)
+    var checkout = data.checkout ? addMinutes(new Date(data.checkout), 60) : new Date().valueOf()
+    var checkin = addMinutes(new Date(data.checkin), 60)
+    $("#checkinLabel").text(DateToHH_MM(checkin))
+    $("#checkoutLabel").text(DateToHH_MM(checkout))
+    var dataday = [
+      {
+        data: [
+          {
+            x: new Date(data.checkout).toDateString(),
+            y: [checkin.getTime(), checkout.getTime()],
+          },
+        ],
+      },
+    ];
+
+
+    var dayoptions = {
+      chart: {
+        type: "rangeBar",
+        height: 100,
+        toolbar: {
+          show: false,
         },
-      ],
-    },
-  ];
-
-  var dayoptions = {
-    chart: {
-      type: "rangeBar",
-      height: 100,
-      toolbar: {
-        show: false,
+        zoom: {
+          enabled: false,
+        },
       },
-      zoom: {
-        enabled: false,
+      series: dataday,
+      plotOptions: {
+        bar: {
+          horizontal: true,
+        },
       },
-    },
-    series: dataday,
-    plotOptions: {
-      bar: {
-        horizontal: true,
+      xaxis: {
+        type: "datetime",
       },
-    },
-    xaxis: {
-      type: "datetime",
-    },
-    yaxis: {
-      title: {},
-    },
-  };
+      yaxis: {
+        title: {},
+      },
+      tooltip: {
+        x: {
+          format: "HH:mm"
+        }
+      }
+    };
 
-  const daychart = new ApexCharts(
-    document.querySelector("#chart"),
-    dayoptions
-  );
 
-  daychart.render();
+    const daychart = new ApexCharts(
+      document.querySelector("#chart"),
+      dayoptions
+    );
+
+    daychart.render();
+  })
+
 </script>
 
 <script>
-  // TABS
   function openCity(evt, cityName) {
-    // Declare all variables
     var i, tabcontent, tablinks;
 
-    // Get all elements with class="tabcontent" and hide them
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
     }
 
-    // Get all elements with class="tablinks" and remove the class "active"
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
 
-    // Show the current tab, and add an "active" class to the button that opened the tab
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";
   }
 
-  // Get the element with id="defaultOpen" and click on it
   document.getElementById("defaultOpen").click();
 </script>
 
@@ -404,8 +413,9 @@
   $("#save-button").click(function () {
     console.log("save")
     $.post(
-      "/admin-panel/user/profile/edit/<%=profile._id%>",
+      "/admin-panel/user/profile/edit/",
       {
+        user_id: "<%= profile._id %>",
         username: $("#input-username").text().replace(/\s/g, ''),
         role: $("#input-role-select").val().replace(/\s/g, ''),
         email: $("#input-email").text().replace(/\s/g, ''),

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const passportLocalMongoose = require("passport-local-mongoose");
+const { Attendance, AttendaceShcema } = require("./attendance");
 
 const UserSchema = new mongoose.Schema({
     username: {
@@ -29,6 +30,12 @@ const UserSchema = new mongoose.Schema({
     mobile: {
         type: String,
     },
+    attendance: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: "Attendance",
+        },
+    ],
 });
 
 UserSchema.plugin(passportLocalMongoose);

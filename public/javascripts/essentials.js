@@ -10,3 +10,7 @@ function DateToHH_MM(date) {
 
     return hours + ":" + minutes;
 }
+
+function addMinutes(date, minutes) {
+    return new Date(date.getTime() + minutes * 60000);
+}

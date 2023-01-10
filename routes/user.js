@@ -111,6 +111,9 @@ router.post("/attendance/checkin", (req, res, next) => {
             res.status(500).json({ error });
         })
         .then((attendance) => {
+            User.findByIdAndUpdate(req.user._id, { $push: { attendance: { $each: [attendance._id], $position: 0 } } }).catch((error) => {
+                console.log(error);
+            });
             res.json(attendance);
         });
 });
