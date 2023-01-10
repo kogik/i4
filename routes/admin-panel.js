@@ -173,10 +173,11 @@ router.get("/delete-user/:id", (req, res, next) => {
             res.redirect("/admin-panel/employees");
         })
         .then((user) => {
-            console.log(user.avatar);
-            fs.unlink("./public/images/avatars/" + user.avatar, (error) => {
-                if (error) console.log(error);
-            });
+            if (user.avatar != "default.png") {
+                fs.unlink("./public/images/avatars/" + user.avatar, (error) => {
+                    if (error) console.log(error);
+                });
+            }
             req.flash("admin-message", "User deleted.");
             res.redirect("/admin-panel/employees");
         });

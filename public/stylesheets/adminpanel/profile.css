@@ -68,7 +68,8 @@
     font-size: 40px;
 }
 #chart {
-    margin-top: 5%;
+    margin-top: 20px;
+    max-width: 100%;
 }
 
 .profile-right ul {
@@ -81,7 +82,7 @@
     display: flex;
     font-weight: 500;
     font-size: 20px;
-    margin-top: 5%;
+    margin-top: 50px;
 }
 
 .profile-right ul li label {
@@ -179,4 +180,9 @@
 
 #input-role-select:disabled {
     color: black;
+}
+
+.apexcharts-svg,
+.apexcharts-canvas {
+    width: 100% !important;
 }

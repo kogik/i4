@@ -35,8 +35,8 @@
                 <%= profile.role %>
               </p>
               <ul>
-                <li id="checkinLabel"><label for="time-enter">Check in:</label> 0:30</li>
-                <li id="checkoutLabel"><label for="time-leave"> Check out:</label> 0:30</li>
+                <li id="checkinLabel"></li>
+                <li id="checkoutLabel"> </li>
               </ul>
               <div id="chart"></div>
             </div>
@@ -74,7 +74,7 @@
               <ul>
                 <label for="role">Role:</label>
                 <br />
-                <select class="editable-element" disabled id="input-role-select" value="<%=profile.role%>">
+                <select disabled id="input-role-select" value="<%=profile.role%>">
                   <option value="admin">admin</option>
                   <option value="self-employed">self-employed</option>
                   <option value="employee">employee</option>
@@ -129,18 +129,26 @@
   </div>
 </body>
 <script>
-
+  var checkin, checkout, date
   $.post("/admin-panel/user/latest-attendance/", { user_id: "<%= profile._id %>" }, (data) => {
     console.log(data)
-    var checkout = data.checkout ? addMinutes(new Date(data.checkout), 60) : new Date().valueOf()
-    var checkin = addMinutes(new Date(data.checkin), 60)
-    $("#checkinLabel").text(DateToHH_MM(checkin))
-    $("#checkoutLabel").text(DateToHH_MM(checkout))
+    checkout = data.checkout ? addMinutes(new Date(data.checkout), 60) : new Date()
+    checkin = addMinutes(new Date(data.checkin), 60)
+    date = addMinutes(new Date(data.date), 60)
+    $("#checkinLabel").text("Checkin: " + DateToHH_MM(checkin))
+    $("#checkoutLabel").text("Checkout: " + (data.checkout ? DateToHH_MM(checkout) : "not yet ..."))
+
+    if (new Date(data.checkin) > new Date()) {
+      $("#checkinLabel").text("User has entered incorect checkin time")
+      $("#checkoutLabel").text("");
+    }
+
+    console.log(checkout)
     var dataday = [
       {
         data: [
           {
-            x: new Date(data.checkout).toDateString(),
+            x: date.toDateString(),
             y: [checkin.getTime(), checkout.getTime()],
           },
         ],
@@ -197,6 +205,8 @@
     for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
     }
+    if (cityName == "personal-informations") $("#edit-button").show()
+    else $("#edit-button").hide()
 
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
@@ -233,7 +243,7 @@
   cancelButton.addEventListener("click", () => {
     cancelButton.style.display = "none";
     saveButton.style.display = "none";
-    document.getElementById("input-role-select").disabled = false;
+    document.getElementById("input-role-select").disabled = true;
     editableElements.forEach((element, index) => {
       element.contentEditable = false;
       element.style.backgroundColor = "transparent";
@@ -380,6 +390,7 @@
     chart: {
       type: "rangeBar",
       height: 1000,
+      width: 600,
       toolbar: {
         show: false,
       },
