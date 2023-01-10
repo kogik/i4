@@ -49,8 +49,8 @@ router.post("/change-password", (req, res, next) => {
         });
 });
 
-router.post("/edit-profile", (req, res, next) => {
-    var { site } = req.body;
+router.post("/profile/edit", (req, res, next) => {
+    var {} = req.body;
     var avatar = req.user.avatar;
     if (req.files) {
         var { mimetype } = req.files.avatar;
@@ -68,11 +68,13 @@ router.post("/edit-profile", (req, res, next) => {
         req.files.avatar.mv("./public/images/avatars/" + filename);
         avatar = filename;
     }
-    User.findByIdAndUpdate(req.user._id, { site: site, avatar: avatar }, (error) => {
-        if (error) req.flash("profile-message", "Unable to edit profile informations.");
-        else req.flash("profile-message", "User informations has been saved.");
-        res.redirect("/user/profile");
-    });
+    User.findByIdAndUpdate(req.user._id, { username, site, email, mobile, car, address, avatar: avatar })
+        .catch((error) => {
+            res.status(500).json(error);
+        })
+        .then((data) => {
+            res.json(data);
+        });
 });
 
 router.post("/attendance/preview", (req, res, next) => {
@@ -103,7 +105,7 @@ router.post("/attendance/preview", (req, res, next) => {
 
 router.post("/attendance/checkin", (req, res, next) => {
     var { date, time, site } = req.body;
-    Attendance.create({ username: req.user.username, user_id: req.user._id, date: new Date(date), site, checkin: time })
+    Attendance.create({ username: req.user.username, user_id: req.user._id, date: new Date(date), site, checkin: time, site: req.user.site })
         .catch((error) => {
             console.log(error);
             res.status(500).json({ error });

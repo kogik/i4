@@ -23,6 +23,12 @@ const UserSchema = new mongoose.Schema({
         type: String,
         uppercase: true,
     },
+    email: {
+        type: String,
+    },
+    mobile: {
+        type: String,
+    },
 });
 
 UserSchema.plugin(passportLocalMongoose);

@@ -6,8 +6,9 @@ var { Attendance } = require("../models/attendance");
 var mongoose = require("mongoose");
 var router = express.Router();
 var fs = require("fs");
+const { route } = require("./user");
 
-// RENDER
+// GET
 //
 //
 //
@@ -27,7 +28,18 @@ router.get("/attendance", async (req, res, next) => {
     res.render("admin-panel/attendance", { title: "i4 - adminpanel", user: req.user, message: req.flash("admin-message") });
 });
 
-// API ?
+router.get("/user/profile/:id", (req, res, next) => {
+    User.findById(req.params.id)
+        .catch((error) => {
+            req.flash("admin-message", "User with id=" + req.params.id + "does not exist.");
+            res.redirect("/admin-panel/employees");
+        })
+        .then((user) => {
+            res.render("admin-panel/profile", { title: "i4 - user profile", user: req.user, profile: user });
+        });
+});
+
+// POST
 //
 //
 //
@@ -62,6 +74,16 @@ router.post("/attendance", (req, res, next) => {
     var { name, date } = req.body;
     if (name || date) {
         // filter properly
+        //
+        // filter = { $and: [{ $or: [{ username: { $regex: name } }, { attendance: { $elemMatch: { site: { $regex: site } } } }] }, { attendance: { $elemMatch: { date: { $regex: date } } } }] };
+        Attendance.find({ $and: [{ $or: [{ username: { $regex: name } }, { site: { $regex: name } }] }, date ? { date: new Date(date) } : {}] })
+            .catch((error) => {
+                console.log(error);
+                res.status(500).json({ error });
+            })
+            .then((data) => {
+                res.json(data);
+            });
     } else {
         // get latest 10 documents from attendance
         Attendance.find()
@@ -109,6 +131,18 @@ router.post("/users-stats", (req, res, next) => {
                     data.others++;
                 }
             }
+            res.json(data);
+        });
+});
+
+router.post("/user/profile/edit/:id", (req, res, next) => {
+    var user_id = req.params.id;
+    var { username, role, email, mobile, site, car, address } = req.body;
+    User.findByIdAndUpdate(user_id, { username, role, site, email, mobile, car, address })
+        .catch((error) => {
+            res.status(500).json(error);
+        })
+        .then((data) => {
             res.json(data);
         });
 });

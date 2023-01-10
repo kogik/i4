@@ -110,6 +110,8 @@ function updateTimeline(start, end) {
         highlight.css({ width: 0 });
         startLabel.text("");
         endLabel.text("Time out of timeline");
+        checkinButton.prop("disabled", true);
+        checkoutButton.prop("disabled", true);
 
         return;
     }

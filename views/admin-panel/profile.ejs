@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= title %>
+  </title>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="stylesheet" href="/stylesheets/adminpanel/profile.css" />
+  <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+
+<body>
+  <div class="container">
+
+    <%- include('nav') -%>
+      <div class="main">
+        <div class="profile">
+          <div class="profile-top">
+            <div class="profile-left">
+              <img src="/images/avatars/<%=profile.avatar%>" id="avatar" class="editable-element" />
+            </div>
+
+            <div class="profile-right">
+              <h1>
+                <%= profile.username %>
+              </h1>
+              <p>
+                <%= profile.role %>
+              </p>
+              <ul>
+                <li><label for="time-enter">Check in:</label> 0:30</li>
+                <li><label for="time-leave"> Check out:</label> 0:30</li>
+              </ul>
+              <div id="chart"></div>
+            </div>
+          </div>
+
+          <div class="profile-bottom">
+            <div class="tab">
+              <button class="tablinks" onclick="openCity(event, 'personal-informations')" id="defaultOpen">
+                Personal Informations
+              </button>
+              <button class="tablinks" onclick="openCity(event, 'attendance-history')">
+                Attendance History
+              </button>
+              <button class="tablinks" onclick="openCity(event, 'documentation-files')">
+                Documentation Files
+              </button>
+              <button class="tablinks" id="edit-button">Edit</button>
+              <button class="tablinks" id="save-button" style="display: none">
+                Save
+              </button>
+              <button class="tablinks" id="cancel-button" style="display: none">
+                Cancel
+              </button>
+            </div>
+
+            <!-- Tab content -->
+            <div id="personal-informations" class="tabcontent">
+              <h3>Personal Informations</h3>
+              <ul>
+                <label for="username">Username:</label>
+                <p class="editable-element" data-original-value="1" id="input-username">
+                  <%=profile.username%>
+                </p>
+              </ul>
+              <ul>
+                <label for="role">Role:</label>
+                <br />
+                <select class="editable-element" disabled id="input-role-select" value="<%=profile.role%>">
+                  <option value="admin">admin</option>
+                  <option value="self-employed">self-employed</option>
+                  <option value="employee">employee</option>
+                </select>
+              </ul>
+              <ul>
+                <label for="email">Email:</label>
+                <p class="editable-element" id="input-email">
+                  <%=profile.email%>
+                </p>
+              </ul>
+              <ul>
+                <label for="phone-number">Mobile:</label>
+                <p class="editable-element" id="mobile-number">
+                  <%=profile.mobile%>
+                </p>
+              </ul>
+              <ul>
+                <label for="site">Site:</label>
+                <p class="editable-element" id="input-site">
+                  <%=profile.site%>
+                </p>
+              </ul>
+
+              <ul>
+                <label for="site">Car:</label>
+                <p class="editable-element" id="input-car">
+                  <%=profile.car%>
+                </p>
+              </ul>
+
+              <ul>
+                <label for="site">Apartment address:</label>
+                <p class="editable-element" id="input-address">
+                  <%=profile.address%>
+                </p>
+              </ul>
+            </div>
+
+            <div id="attendance-history" class="tabcontent">
+              <h3>Attendance History</h3>
+              <div id="attendance-chart"></div>
+            </div>
+
+            <div id="documentation-files" class="tabcontent">
+              <h3>Documentation Files</h3>
+              <p>Soon...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</body>
+
+<script>
+  const dataday = [
+    {
+      name: "Current Day",
+      data: [
+        {
+          x: "",
+          y: [new Date(1673388000).getTime(), new Date(1673424000).getTime()],
+        },
+      ],
+    },
+  ];
+
+  var dayoptions = {
+    chart: {
+      type: "rangeBar",
+      height: 100,
+      toolbar: {
+        show: false,
+      },
+      zoom: {
+        enabled: false,
+      },
+    },
+    series: dataday,
+    plotOptions: {
+      bar: {
+        horizontal: true,
+      },
+    },
+    xaxis: {
+      type: "datetime",
+    },
+    yaxis: {
+      title: {},
+    },
+  };
+
+  const daychart = new ApexCharts(
+    document.querySelector("#chart"),
+    dayoptions
+  );
+
+  daychart.render();
+</script>
+
+<script>
+  // TABS
+  function openCity(evt, cityName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  // Get the element with id="defaultOpen" and click on it
+  document.getElementById("defaultOpen").click();
+</script>
+
+<script>
+  // EDIT ELEMENTS
+  const editButton = document.querySelector("#edit-button");
+  const cancelButton = document.querySelector("#cancel-button");
+  const saveButton = document.querySelector("#save-button");
+  const editableElements = document.querySelectorAll(".editable-element");
+  let originalValues = [];
+
+  editButton.addEventListener("click", () => {
+    cancelButton.style.display = "inline-block";
+    saveButton.style.display = "inline-block";
+    document.getElementById("input-role-select").disabled = false;
+    editableElements.forEach((element, index) => {
+      originalValues[index] = element.textContent;
+      element.contentEditable = true;
+      element.style.backgroundColor = "#fafafa";
+      element.style.border = "1px solid #ccc";
+    });
+  });
+
+  cancelButton.addEventListener("click", () => {
+    cancelButton.style.display = "none";
+    saveButton.style.display = "none";
+    document.getElementById("input-role-select").disabled = false;
+    editableElements.forEach((element, index) => {
+      element.contentEditable = false;
+      element.style.backgroundColor = "transparent";
+      element.style.border = "none";
+      element.textContent = originalValues[index];
+    });
+  });
+</script>
+
+<script>
+  const datamonth = [
+    {
+      name: "Shift 2",
+      data: [
+        {
+          x: "1",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "2",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "3",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "4",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "5",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "6",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "7",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "8",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "9",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "10",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "11",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "12",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "13",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "14",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "15",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "16",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "17",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "18",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "19",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "20",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "21",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "22",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "23",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "24",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "25",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "26",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "27",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "28",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "29",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "30",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+        {
+          x: "31",
+          y: [new Date().getTime(), new Date().getTime()],
+        },
+      ],
+    },
+  ];
+
+  var monthoptions = {
+    chart: {
+      type: "rangeBar",
+      height: 1000,
+      toolbar: {
+        show: false,
+      },
+      zoom: {
+        enabled: false,
+      },
+    },
+    series: datamonth,
+    plotOptions: {
+      bar: {
+        horizontal: true,
+      },
+    },
+    xaxis: {
+      type: "datetime",
+    },
+    yaxis: {
+      title: {},
+    },
+  };
+
+  const monthchart = new ApexCharts(
+    document.querySelector("#attendance-chart"),
+    monthoptions
+  );
+
+  monthchart.render();
+</script>
+
+<script>
+  $("#save-button").click(function () {
+    console.log("save")
+    $.post(
+      "/admin-panel/user/profile/edit/<%=profile._id%>",
+      {
+        username: $("#input-username").text().replace(/\s/g, ''),
+        role: $("#input-role-select").val().replace(/\s/g, ''),
+        email: $("#input-email").text().replace(/\s/g, ''),
+        mobile: $("#mobile-number").text().replace(/\s/g, ''),
+        site: $("#input-site").text().replace(/\s/g, ''),
+        car: $("#input-car").text().replace(/\s/g, ''),
+        address: $("#input-address").text().replace(/\s/g, ''),
+      },
+
+      (data) => {
+        cancelButton.style.display = "none";
+        saveButton.style.display = "none";
+        document.getElementById("input-role-select").disabled = true;
+        editableElements.forEach((element, index) => {
+          originalValues[index] = element.textContent;
+          element.contentEditable = false;
+          element.style.backgroundColor = "transparent";
+          element.style.border = "none";
+        });
+      }
+    );
+  });
+</script>
+
+</html>
