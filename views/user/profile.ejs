@@ -1,77 +1,238 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>
-        <%= title %>
-    </title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-    <link rel="stylesheet" href="/stylesheets/popup.css" />
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= title %>
+  </title>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="stylesheet" href="/stylesheets/user/profile.css" />
+  <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <script src="/javascripts/essentials.js"></script>
 </head>
 
 <body>
-    <%- include('nav') -%>
+  <%- include('nav') -%>
+    <div class="main">
+      <div class="profile">
+        <div class="profile-top">
+          <div class="profile-left">
+            <img src="/images/avatars/<%=user.avatar%>" id="avatar" class="editable-element" />
 
-        <div id="popup-edit" class="popup" hidden>
-            <div class="popup-box">
-                <h1>Edit your profile</h1>
-                <h3>Username: <%= user.username%>
-                </h3>
-                <h3>Role: <%= user.role%>
-                </h3>
-                <form action="/user/edit-profile" method="post" enctype="multipart/form-data">
-                    <label for="site">Site: </label>
-                    <input type="text" name="site" value="<%= user.site %>" />
-                    <br />
+            <input type="file" id="file" />
+            <label for="file" id="uploadBtn">Change Avatar</label>
+          </div>
 
-                    <label for="avatar">Avatar: </label>
-                    <input type="file" name="avatar" accept=".png, .jpg" />
-                    <p>Allowed filetype: .png, .jpg, .jpeg</p>
-                    <p>Maximum file size allowed: 8mb</p>
-                    <br />
-
-                    <button type="submit">Save</button>
-                </form>
-                <button onclick="popup_toggle('popup-edit')">Close popup</button>
-            </div>
+          <div class="profile-right">
+            <h1>
+              <%= user.username %>
+            </h1>
+            <p>
+              <%= user.role %>
+            </p>
+            <ul>
+              <li id="checkinLabel"></li>
+              <li id="checkoutLabel"></li>
+            </ul>
+            <div id="chart"></div>
+          </div>
         </div>
 
-        <div id="popup-chngpass" class="popup" hidden>
-            <div class="popup-box">
-                <h1>Change your password</h1>
-                <form action="/user/change-password" method="post">
-                    <p>Current password:</p>
-                    <input type="password" name="current_password" />
-                    <p>New password:</p>
-                    <input type="password" name="new_password" />
-                    <p>Repeat new password:</p>
-                    <input type="password" name="re_new_password" />
+        <div class="profile-bottom">
+          <div class="tab">
+            <button class="tablinks" onclick="openCity(event, 'personal-informations')" id="defaultOpen">
+              Personal Informations
+            </button>
+            <button class="tablinks" id="edit-button">Edit</button>
+            <button class="tablinks" id="save-button" style="display: none">
+              Save
+            </button>
+            <button class="tablinks" id="cancel-button" style="display: none">
+              Cancel
+            </button>
+          </div>
 
-                    <button type="submit">Change password</button>
-                </form>
-                <button onclick="popup_toggle('popup-chngpass')">Close popup</button>
-            </div>
+          <!-- Tab content -->
+          <div id="personal-informations" class="tabcontent">
+            <h3>Personal Informations</h3>
+            <ul>
+              <label for="email">Email:</label>
+              <p class="editable-element" id="input-email">
+                <%=user.email%>
+              </p>
+            </ul>
+            <ul>
+              <label for="phone-number">Mobile:</label>
+              <p class="editable-element" id="mobile-number">
+                <%=user.mobile%>
+              </p>
+            </ul>
+            <ul>
+              <label for="site">Site:</label>
+              <p class="editable-element" id="input-site">
+                <%=user.site%>
+              </p>
+            </ul>
+
+            <ul>
+              <label for="site">Car:</label>
+              <p class="editable-element" id="input-car">
+                <%=user.car%>
+              </p>
+            </ul>
+
+            <ul>
+              <label for="site">Apartment address:</label>
+              <p class="editable-element" id="input-address">
+                <%=user.address%>
+              </p>
+            </ul>
+          </div>
+
+          <div id="attendance-history" class="tabcontent">
+            <h3>Attendance History</h3>
+            <select name="month" id="month-select">
+              <option value="januar-2022">januar-2022</option>
+              <option value="februar-2022">februar-2022</option>
+              <option value="marec-2022" selected>marec-2022</option>
+              <option value="april-2022">april-2022</option>
+              <option value="maj-2022">maj-2022</option>
+              <option value="jun-2022">jun-2022</option>
+              <option value="jul-2022">jul-2022</option>
+              <option value="august-2022">august-2022</option>
+              <option value="september-2022">september-2022</option>
+              <option value="oktober-2022">oktober-2022</option>
+              <option value="november-2022">november-2022</option>
+              <option value="december-2022"></option>
+            </select>
+            <div id="attendance-chart" style="display: block"></div>
+          </div>
+
+          <div id="documentation-files" class="tabcontent">
+            <h3>Documentation Files</h3>
+            <p>Soon...</p>
+          </div>
         </div>
-
-        <% if (typeof(message) !="undefined" ){ %>
-            <div class="msg">
-                <%= message %>
-            </div>
-            <% } %>
-
-                <img src="/images/avatars/<%= user.avatar %>" width="200px" style="margin-top: 30px" />
-                <h2>Username: <%= user.username %>
-                </h2>
-                <h2>Role: <%= user.role %>
-                </h2>
-                <h2>Site: <%= user.site %>
-                </h2>
-                <br />
-
-                <button onclick="popup_toggle('popup-edit')">Edit</button>
-                <button onclick="popup_toggle('popup-chngpass')">Change password</button>
-
-                <script src="/javascripts/user/profile.js"></script>
+      </div>
+    </div>
 </body>
+
+
+<script>
+  function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    if (cityName == "personal-informations") $("#edit-button").show();
+    else $("#edit-button").hide();
+
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  document.getElementById("defaultOpen").click();
+</script>
+
+<script>
+  // EDIT ELEMENTS
+  const editButton = document.querySelector("#edit-button");
+  const cancelButton = document.querySelector("#cancel-button");
+  const saveButton = document.querySelector("#save-button");
+  const editableElements = document.querySelectorAll(".editable-element");
+  let originalValues = [];
+
+  editButton.addEventListener("click", () => {
+    cancelButton.style.display = "inline-block";
+    saveButton.style.display = "inline-block";
+    editableElements.forEach((element, index) => {
+      originalValues[index] = element.textContent;
+      element.contentEditable = true;
+      element.style.backgroundColor = "#fafafa";
+      element.style.border = "1px solid #ccc";
+    });
+  });
+
+  cancelButton.addEventListener("click", () => {
+    cancelButton.style.display = "none";
+    saveButton.style.display = "none";
+    editableElements.forEach((element, index) => {
+      element.contentEditable = false;
+      element.style.backgroundColor = "transparent";
+      element.style.border = "none";
+      element.textContent = originalValues[index];
+    });
+  });
+</script>
+
+
+<script>
+  $("#save-button").click(function () {
+    console.log("save");
+    $.post(
+      "/user/profile/edit/",
+      {
+        user_id: "<%= user._id %>",
+        email: $("#input-email").text().replace(/\s/g, ""),
+        mobile: $("#mobile-number").text().replace(/\s/g, ""),
+        site: $("#input-site").text().replace(/\s/g, ""),
+        car: $("#input-car").text().replace(/\s/g, ""),
+        address: $("#input-address").text().replace(/\s/g, ""),
+      },
+
+      (data) => {
+        cancelButton.style.display = "none";
+        saveButton.style.display = "none";
+        editableElements.forEach((element, index) => {
+          originalValues[index] = element.textContent;
+          element.contentEditable = false;
+          element.style.backgroundColor = "transparent";
+          element.style.border = "none";
+        });
+      }
+    );
+  });
+</script>
+
+<script>
+  const imgDiv = document.querySelector(".profile-left");
+  const img = document.querySelector("#avatar");
+  const file = document.querySelector("#file");
+  const uploadBtn = document.querySelector("#uploadBtn");
+
+  imgDiv.addEventListener("mouseenter", function () {
+    uploadBtn.style.display = "block";
+  });
+
+  imgDiv.addEventListener("mouseleave", function () {
+    uploadBtn.style.display = "none";
+  });
+
+  file.addEventListener("change", function () {
+    const choosedFile = this.files[0];
+
+    if (choosedFile) {
+      const reader = new FileReader();
+
+      reader.addEventListener("load", function () {
+        img.setAttribute("src", reader.result);
+      });
+
+      reader.readAsDataURL(choosedFile);
+    }
+  });
+</script>
 
 </html>

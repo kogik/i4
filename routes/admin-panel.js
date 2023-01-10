@@ -7,6 +7,7 @@ var mongoose = require("mongoose");
 var router = express.Router();
 var fs = require("fs");
 const { route } = require("./user");
+const { start } = require("repl");
 
 // GET
 //
@@ -162,6 +163,21 @@ router.post("/user/latest-attendance/", (req, res, next) => {
                 .then((attendance) => {
                     res.json(attendance);
                 });
+        });
+});
+
+router.post("/user/attendance/", (req, res, next) => {
+    var { user_id, month } = req.body;
+    const startDate = new Date(2023, month - 1, 1, 1);
+    const endDate = new Date(2023, month, 0, 1);
+    console.log(startDate, endDate);
+    Attendance.find({ user_id, date: { $gte: startDate, $lt: endDate } })
+        .catch((error) => {
+            console.log(error);
+            res.status(500).json(error);
+        })
+        .then((data) => {
+            res.json(data);
         });
 });
 

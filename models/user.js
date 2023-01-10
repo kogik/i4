@@ -27,7 +27,13 @@ const UserSchema = new mongoose.Schema({
     email: {
         type: String,
     },
+    car: {
+        type: String,
+    },
     mobile: {
+        type: String,
+    },
+    address: {
         type: String,
     },
     attendance: [

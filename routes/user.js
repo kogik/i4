@@ -50,7 +50,7 @@ router.post("/change-password", (req, res, next) => {
 });
 
 router.post("/profile/edit", (req, res, next) => {
-    var {} = req.body;
+    var { site, email, mobile, car, address } = req.body;
     var avatar = req.user.avatar;
     if (req.files) {
         var { mimetype } = req.files.avatar;
@@ -68,11 +68,13 @@ router.post("/profile/edit", (req, res, next) => {
         req.files.avatar.mv("./public/images/avatars/" + filename);
         avatar = filename;
     }
-    User.findByIdAndUpdate(req.user._id, { username, site, email, mobile, car, address, avatar: avatar })
+    console.log(site, email, mobile, car, address);
+    User.findByIdAndUpdate(req.user._id, { site, email, mobile, car, address, avatar: avatar })
         .catch((error) => {
             res.status(500).json(error);
         })
         .then((data) => {
+            console.log(data);
             res.json(data);
         });
 });

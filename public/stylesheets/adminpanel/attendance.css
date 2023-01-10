@@ -55,7 +55,7 @@ thead {
     border: 2px solid #113b77;
 }
 
-#users-table button {
+#users-table a {
     padding: 6px 20px;
     border-radius: 15px;
     cursor: pointer;
@@ -63,7 +63,7 @@ thead {
     border: 2px solid #113b77;
 }
 
-#users-table button:hover {
+#users-table a:hover {
     background: #113b77;
     color: white;
     transition: 0.5s;

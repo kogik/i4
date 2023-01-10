@@ -5,7 +5,7 @@ $(document).ready(function () {
             var checkin = DateToHH_MM(new Date(attendance[i].checkin)),
                 checkout = DateToHH_MM(new Date(attendance[i].checkout)),
                 date = new Date(attendance[i].date).toUTCString().split("00")[0];
-            $("tbody").append("<tr id='element'>" + "<td>" + attendance[i].username + "</td>" + "<td>" + attendance[i].site + "</td>" + "<td>" + date + "</td>" + "<td>" + checkin + "</td>" + "<td>" + checkout + "</td>" + "<td><button>View</button></td></tr>");
+            $("tbody").append("<tr id='element'>" + "<td>" + attendance[i].username + "</td>" + "<td>" + attendance[i].site + "</td>" + "<td>" + date + "</td>" + "<td>" + checkin + "</td>" + "<td>" + checkout + "</td>" + "<td><a href='/admin-panel/user/profile/" + attendance[i].user_id + "'>Profile</a></td></tr>");
         }
         paginate();
     });
@@ -23,7 +23,7 @@ $(document).ready(function () {
                 var checkin = DateToHH_MM(new Date(attendance[i].checkin)),
                     checkout = DateToHH_MM(new Date(attendance[i].checkout)),
                     date = new Date(attendance[i].date).toUTCString().split("00")[0];
-                $("tbody").append("<tr id='element'>" + "<td>" + attendance[i].username + "</td>" + "<td>" + attendance[i].site + "</td>" + "<td>" + date + "</td>" + "<td>" + checkin + "</td>" + "<td>" + checkout + "</td>" + "<td><button>View</button></td></tr>");
+                $("tbody").append("<tr id='element'>" + "<td>" + attendance[i].username + "</td>" + "<td>" + attendance[i].site + "</td>" + "<td>" + date + "</td>" + "<td>" + checkin + "</td>" + "<td>" + checkout + "</td>" + "<td><a href='/admin-panel/user/profile/" + attendance[i].user_id + "'>Profile</a></td></tr>");
             }
             paginate();
         });

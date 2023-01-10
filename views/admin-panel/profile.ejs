@@ -116,6 +116,20 @@
 
             <div id="attendance-history" class="tabcontent">
               <h3>Attendance History</h3>
+              <select name="month" id="month-select">
+                <option value="01" selected>januar-2023</option>
+                <option value="02">februar-2023</option>
+                <option value="03">marec-2023</option>
+                <option value="04">april-2023</option>
+                <option value="05">maj-2023</option>
+                <option value="06">jun-2023</option>
+                <option value="07">jul-2023</option>
+                <option value="08">august-2023</option>
+                <option value="09">september-2023</option>
+                <option value="10">oktober-2023</option>
+                <option value="11">november-2023</option>
+                <option value="12">december-2023</option>
+              </select>
               <div id="attendance-chart"></div>
             </div>
 
@@ -144,7 +158,7 @@
     }
 
     console.log(checkout)
-    var dataday = [
+    var daydata = [
       {
         data: [
           {
@@ -167,7 +181,7 @@
           enabled: false,
         },
       },
-      series: dataday,
+      series: daydata,
       plotOptions: {
         bar: {
           horizontal: true,
@@ -254,170 +268,82 @@
 </script>
 
 <script>
-  const datamonth = [
-    {
-      name: "Shift 2",
-      data: [
-        {
-          x: "1",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "2",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "3",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "4",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "5",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "6",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "7",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "8",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "9",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "10",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "11",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "12",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "13",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "14",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "15",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "16",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "17",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "18",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "19",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "20",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "21",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "22",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "23",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "24",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "25",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "26",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "27",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "28",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "29",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "30",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-        {
-          x: "31",
-          y: [new Date().getTime(), new Date().getTime()],
-        },
-      ],
-    },
-  ];
 
-  var monthoptions = {
-    chart: {
-      type: "rangeBar",
-      height: 1000,
-      width: 600,
-      toolbar: {
-        show: false,
+  var month = $("#month-select").val()
+  $.post("/admin-panel/user/attendance", { user_id: "<%= profile._id %>", month: parseInt(month) }, (data) => {
+    var monthdata = [
+      {
+        data: [],
       },
-      zoom: {
-        enabled: false,
-      },
-    },
-    series: datamonth,
-    plotOptions: {
-      bar: {
-        horizontal: true,
-      },
-    },
-    xaxis: {
-      type: "datetime",
-    },
-    yaxis: {
-      title: {},
-    },
-  };
+    ];
 
-  const monthchart = new ApexCharts(
-    document.querySelector("#attendance-chart"),
-    monthoptions
-  );
+    for (var x = 1; x <= 31; x++) {
+      for (dat of data) {
+        console.log(new Date(dat.date).getDate() + 1, new Date(2023, month, x).getDate())
+        if (new Date(dat.date).getDate() + 1 == new Date(2023, month, x).getDate()) {
+          monthdata[0].data.push({
+            x: x.toString(), y: [new Date(dat.checkin).getTime(),
+            new Date(dat.checkout).getTime()]
 
-  monthchart.render();
+          })
+          break
+        }
+      }
+      monthdata[0].data.push({
+        x: x.toString(), y: [,]
+      })
+    }
+
+
+
+
+    var monthoptions = {
+      chart: {
+        type: "rangeBar",
+        height: 1000,
+        toolbar: {
+          show: false,
+        },
+        zoom: {
+          enabled: false,
+        },
+      },
+      series: monthdata,
+      plotOptions: {
+        bar: {
+          horizontal: true,
+        },
+      },
+      xaxis: {
+        type: "datetime",
+      },
+      yaxis: {
+        title: {},
+      },
+      tooltip: {
+        x: {
+          format: "HH:mm"
+        }
+      }
+    };
+
+
+    const monthchart = new ApexCharts(
+      document.querySelector("#attendance-chart"),
+      monthoptions
+    );
+
+    monthchart.render();
+  })
+
+
+
+
+
+  $("#month-select").on("change", (e) => {
+    updateMonthPreview()
+  })
+
 </script>
 
 <script>
