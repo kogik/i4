@@ -268,18 +268,18 @@
 </script>
 
 <script>
-
-  var month = $("#month-select").val()
-  $.post("/admin-panel/user/attendance", { user_id: "<%= profile._id %>", month: parseInt(month) }, (data) => {
+  var monthchart
+  $.post("/admin-panel/user/attendance", { user_id: "<%= profile._id %>", month: parseInt($("#month-select").val()) }, (data) => {
+    var month = $("#month-select").val()
     var monthdata = [
       {
+        name: "main",
         data: [],
       },
     ];
 
     for (var x = 1; x <= 31; x++) {
       for (dat of data) {
-        console.log(new Date(dat.date).getDate() + 1, new Date(2023, month, x).getDate())
         if (new Date(dat.date).getDate() + 1 == new Date(2023, month, x).getDate()) {
           monthdata[0].data.push({
             x: x.toString(), y: [new Date(dat.checkin).getTime(),
@@ -328,7 +328,7 @@
     };
 
 
-    const monthchart = new ApexCharts(
+    monthchart = new ApexCharts(
       document.querySelector("#attendance-chart"),
       monthoptions
     );
@@ -341,7 +341,31 @@
 
 
   $("#month-select").on("change", (e) => {
-    updateMonthPreview()
+    $.post("/admin-panel/user/attendance", { user_id: "<%= profile._id %>", month: parseInt($("#month-select").val()) }, (res) => {
+      var month = $("#month-select").val()
+      var data = []
+      for (var x = 1; x <= 31; x++) {
+        for (dat of res) {
+          if (new Date(dat.date).getDate() + 1 == new Date(2023, month, x).getDate()) {
+            data.push({
+              x: x.toString(), y: [new Date(dat.checkin).getTime(),
+              new Date(dat.checkout).getTime()]
+
+            })
+            break
+          }
+        }
+        data.push({
+          x: x.toString(), y: [,]
+        })
+      }
+
+
+      monthchart.updateSeries([{
+        name: "main",
+        data
+      }])
+    })
   })
 
 </script>
