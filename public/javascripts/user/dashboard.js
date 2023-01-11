@@ -104,7 +104,7 @@ var td_width = $("#td").outerWidth(),
 function updateTimeline(start, end) {
     start = timeStringToFloat(start);
     end = timeStringToFloat(end);
-    if ((start >= 12 && start <= 22) || (end >= 12 && end <= 21)) {
+    if ((start > 12 && start < 22) || (end > 12 && end < 22)) {
         console.log("time out of timeline");
         highlight.css({ left: 0 });
         highlight.css({ width: 0 });
